@@ -1,0 +1,58 @@
+.social-icon {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.social-icon li{
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.social-icon a {
+    display: block;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.social-icon a {
+    background: rgba(204, 204, 204, 0.85);
+    color: #000;
+    border: 2px solid transparent;
+    transition: 500ms;
+}
+
+.social-icon a:hover {
+    border: 2px solid black;
+}
+
+.social-icon a.fb-icon:hover {
+    background: rgba(255, 255, 255, 0.25); /* social icon hover background color */
+    color: #1d2477; /* social icon hover color */
+}
+
+.social-icon a.twitter-icon:hover {
+    background: rgba(255, 255, 255, 0.25); /* social icon hover background color */
+    color: #22abc3; /* social icon hover color */
+}
+
+.social-icon a.yt-icon:hover {
+    background: rgba(255, 255, 255, 0.25); /* social icon hover background color */
+    color: #dc3545; /* social icon hover color */
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    padding-top: 5px;
+    width: 100%;
+    height: 70px;
+    border-top: 1px solid white;
+    background: #15151e;
+    background: linear-gradient(to bottom, #15151eeb, #15151e);
+}

@@ -1,0 +1,25 @@
+.bg-blue {
+    background: #15151e;
+    background: radial-gradient(#15171ee8, #15151e);
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #dd0000;
+    background-color: #f2f2f2;
+    border-color: transparent transparent #f3f3f3;
+    border-bottom: 3px solid !important;
+    font-weight: bold;
+}
+
+.nav-tabs .nav-link {
+    border-bottom: 1px solid #dd0000;
+    color: #696969;
+}
+
+#jumbotron img {
+    width: 75%;
+}
+
+.jumbotron-car {
+    text-align: center;
+}
