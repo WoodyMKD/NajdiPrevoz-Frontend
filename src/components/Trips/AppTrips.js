@@ -1,24 +1,70 @@
 import React, {Component} from 'react';
-import {Col, Container, Form, FormGroup, Input, Row} from "reactstrap";
+import {
+	Col,
+	Container,
+	Form,
+	FormGroup,
+	Input,
+	Nav,
+	NavItem,
+	NavLink,
+	Row,
+	TabContent,
+	TabPane
+} from "reactstrap";
 
-import AppTripRow from './Row/AppTripRow'
+import LoadingOverlay from 'react-loading-overlay';
+
+import AppTripRow from './AppTripRow/AppTripRow'
 
 import './AppTrips.css';
 import {faArrowRight, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {allCities} from "../../utils/constants";
+import classnames from 'classnames';
+import AppTripsRepository from "../../services/appTripService";
+import FacebookAppTripRow from "./FacebookTripRow/FacebookTripRow";
 
 class AppTrips extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
+			appTrips: [],
+			fbTrips: [],
+			isListLoading: false,
 			cityFrom: this.props.cityFrom,
-			cityTo: this.props.cityTo
+			cityTo: this.props.cityTo,
+			activeTab: '1'
 		};
+		this.loadTrips = this.loadTrips.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
+
+	componentDidMount() {
+		this.loadTrips(this.state.cityFrom, this.state.cityTo);
+	}
+
+	loadTrips = (cityFrom, cityTo, page=0) => {
+		this.setState({
+			isListLoading: true
+		});
+
+		const appTrips = AppTripsRepository.getTrips();
+		const fbTrips = AppTripsRepository.getTrips();
+
+		Promise.all([ appTrips, fbTrips ]).then((responses) => {
+			console.log(responses);
+			this.setState({
+				isListLoading: false,
+				appTrips: responses[0].content,
+				fbTrips: responses[1].content
+			});
+		}).catch((error) => {
+			console.log(error);
+		});
+	};
 
 	handleInputChange(event) {
 		const target = event.target;
@@ -33,13 +79,21 @@ class AppTrips extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 
-		// refresh the first form also
+		// refresh the home page form also
 		this.props.onCityChange(this.state.cityFrom, this.state.cityTo, false);
-
-		// get new Trips
+		this.loadTrips(this.state.cityFrom, this.state.cityTo);
 	}
 
 	render() {
+		const toggle = tab => {
+			console.log("TAB:" + this.state.activeTab);
+			if(this.state.activeTab !== tab) {
+				this.setState({
+					activeTab : tab
+				});
+			}
+		};
+
 		let allCitiesOptions;
 		allCitiesOptions = allCities.map((city, index) => {
 			return (
@@ -48,14 +102,29 @@ class AppTrips extends Component {
 		});
 
 		let appTripRows;
-		if (this.props.appTrips.length !== 0) {
-			appTripRows = this.props.appTrips.map((trip, index) => {
+		if (this.state.appTrips.length !== 0) {
+			appTripRows = this.state.appTrips.map((trip, index) => {
 				return (
-					<AppTripRow appTripId={trip.id} trip={trip} key={index} colClass={"col-md-6 mt-2 col-sm-12"}/>
+					<AppTripRow appTripId={trip.id} trip={trip} key={index}/>
 				);
 			});
 		} else {
 			appTripRows = (
+				<div className="row">
+					<h2 style={{marginLeft: "auto", marginRight: "auto"}}>Нема огласи...</h2>
+				</div>
+			);
+		}
+
+		let fbTripRows;
+		if (this.state.fbTrips.length !== 0) {
+			fbTripRows = this.state.appTrips.map((trip, index) => {
+				return (
+					<FacebookAppTripRow appTripId={trip.id} trip={trip} key={index}/>
+				);
+			});
+		} else {
+			fbTripRows = (
 				<div className="row">
 					<h2 style={{marginLeft: "auto", marginRight: "auto"}}>Нема огласи...</h2>
 				</div>
@@ -99,33 +168,41 @@ class AppTrips extends Component {
 						</div>
 					</Col>
 				</Form>
-				<Row xs="1" sm="1" md="1" lg="2">
-					<Col>
-						<div className="app-trips-container">
-							<div className="trips-header">
-								Понуди од апликацијата
-							</div>
-							<div className="trips-content">
-								asdasd
-							</div>
-						</div>
-					</Col>
-					<Col>
-						<div className="app-trips-container">
-							<div className="trips-header">
-								Понуди од facebook групата
-							</div>
-							<Row>
-								<Col>
-									<div className="trips-content">
-										asdasdas
-									</div>
-								</Col>
-							</Row>
-						</div>
-					</Col>
-				</Row>
-				{appTripRows}
+
+				<LoadingOverlay
+					active={this.state.isListLoading}
+					spinner
+					text='Се вчитува...'
+				>
+					<div className="trips-content">
+						<Nav tabs className="nav-justified cursor-pointer">
+							<NavItem>
+								<NavLink
+									className={classnames({ active: this.state.activeTab === '1' })}
+									onClick={() => { toggle('1'); }}
+								>
+									Огласи од апликацијата
+								</NavLink>
+							</NavItem>
+							<NavItem>
+								<NavLink
+									className={classnames({ active: this.state.activeTab === '2' })}
+									onClick={() => { toggle('2'); }}
+								>
+									Огласи од фејсбук станица
+								</NavLink>
+							</NavItem>
+						</Nav>
+						<TabContent activeTab={this.state.activeTab}>
+							<TabPane tabId="1">
+								{appTripRows}
+							</TabPane>
+							<TabPane tabId="2">
+								{fbTripRows}
+							</TabPane>
+						</TabContent>
+					</div>
+				</LoadingOverlay>
 			</Container>
 		);
 	};

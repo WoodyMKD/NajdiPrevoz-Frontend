@@ -27,13 +27,12 @@ class App extends Component {
       isAuthenticated: false,
       cityFrom: "Скопје",
       cityTo: "Велес",
-      appTrips: []
+      featuredAppTrips: []
     };
 
     this.finishLoading = this.finishLoading.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
     this.loadFeaturedAppTrips = this.loadFeaturedAppTrips.bind(this);
-    this.loadAppTrips = this.loadAppTrips.bind(this);
     this.onCityChange = this.onCityChange.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -50,8 +49,7 @@ class App extends Component {
         currentUser: response,
         isAuthenticated: true
       });
-      if(this.state.isAuthenticated) this.loadFeaturedAppTrips();
-      else this.finishLoading();
+      this.finishLoading();
     }).catch((error) => {
             console.log(error);
     });
@@ -61,19 +59,7 @@ class App extends Component {
   loadFeaturedAppTrips = (page=0) => {
     AppTripsRepository.getTrips().then((data) => {
       this.setState({
-          appTrips: data.content
-      });
-      this.finishLoading();
-      console.log(page);
-    }).catch((error) => {
-      console.log(error);
-    });
-  };
-
-  loadAppTrips = (cityFrom, cityTo, page=0) => {
-    AppTripsRepository.getTrips().then((data) => {
-      this.setState({
-        appTrips: data.content
+        featuredAppTrips: data.content
       });
       this.finishLoading();
       console.log(page);
@@ -126,7 +112,7 @@ class App extends Component {
     this.setState({
         currentUser: null,
         isAuthenticated: false,
-        appTrips: []
+        featuredAppTrips: []
     });
 
     store.addNotification({
@@ -158,7 +144,7 @@ class App extends Component {
                 <RegisterForm onRegister={this.handleRegister}/>
               }/>
               <Route path={"/trips"} exact render={() =>
-                <AppTrips onPageClick={this.loadFeaturedAppTrips} appTrips={this.state.appTrips} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange}/>
+                <AppTrips cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange}/>
               }/>
               <Route path={"/"} exact render={() =>
                 <Home onCityChange={this.onCityChange} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo}/>

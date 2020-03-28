@@ -4,9 +4,11 @@ import {withRouter} from 'react-router';
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-import {faCar, faHome, faSignOutAlt, faUserAlt} from "@fortawesome/free-solid-svg-icons";
+import {faCalendarAlt, faCar, faHome, faSignOutAlt, faUserAlt} from "@fortawesome/free-solid-svg-icons";
 
 import './Header.css';
+import {store} from "react-notifications-component";
+import {notificationSoon} from "../../utils/notifications";
 
 const Header = (props) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -14,11 +16,17 @@ const Header = (props) => {
 
 	let authMenu;
 
+	const soonNotification = () => {
+		store.addNotification({
+			...notificationSoon,
+		});
+	};
+
 	if (props.isAuthenticated) {
 		authMenu = (
 			<Nav className="ml-auto" navbar>
 				<NavItem>
-					<NavLink tag={Link} to={"/"}>
+					<NavLink onClick={soonNotification}>
                         <span className="btn btn-outline-secondary my-2 my-sm-0">
                             <FontAwesomeIcon icon={faUserAlt}/> {props.currentUser.name}
                         </span>
@@ -68,6 +76,9 @@ const Header = (props) => {
 						</NavItem>
 						<NavItem>
 							<NavLink tag={Link} to="/trips"><FontAwesomeIcon icon={faCar}/> Понуди</NavLink>
+						</NavItem>
+						<NavItem>
+							<NavLink tag={Link} onClick={soonNotification}><FontAwesomeIcon icon={faCalendarAlt}/> Мои Понуди</NavLink>
 						</NavItem>
 					</Nav>
 					{authMenu}

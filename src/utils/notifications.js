@@ -23,3 +23,17 @@ export const notificationError = {
         onScreen: true
     }
 };
+
+export const notificationSoon = {
+    title: "Наскоро!",
+    message: "Оваа функција ќе биде воведена наскоро!",
+    type: "info",
+    insert: "top",
+    container: "bottom-right",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+        duration: 3500,
+        onScreen: true
+    }
+};
