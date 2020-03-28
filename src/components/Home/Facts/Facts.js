@@ -1,7 +1,12 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-import {faBriefcase, faCamera, faCoffee, faSmile} from "@fortawesome/free-solid-svg-icons";
+import {
+	faCar,
+	faCarSide,
+	faGraduationCap,
+	faUsers
+} from "@fortawesome/free-solid-svg-icons";
 
 import './Facts.css';
 
@@ -12,27 +17,27 @@ const facts = () => {
 				<div className="projectFactsWrap ">
 					<div className="item wow fadeInUpBig animated animated" data-number="12"
 							 style={{visibility: "visible"}}>
-						<FontAwesomeIcon icon={faBriefcase}/>
+						<FontAwesomeIcon icon={faUsers}/>
 						<p id="number1" className="number">12</p>
-						<p>Projects done</p>
+						<p>Корисници</p>
 					</div>
 					<div className="item wow fadeInUpBig animated animated" data-number="55"
 							 style={{visibility: "visible"}}>
-						<FontAwesomeIcon icon={faSmile}/>
-						<p id="number2" className="number">55</p>
-						<p>Happy clients</p>
+						<FontAwesomeIcon icon={faCar}/>
+						<p id="number2" className="number">359</p>
+						<p>Вкупно понуди</p>
 					</div>
 					<div className="item wow fadeInUpBig animated animated" data-number="359"
 							 style={{visibility: "visible"}}>
-						<FontAwesomeIcon icon={faCoffee}/>
-						<p id="number3" className="number">359</p>
-						<p>Cups of coffee</p>
+						<FontAwesomeIcon icon={faCarSide}/>
+						<p id="number3" className="number">55</p>
+						<p>Активни понуди</p>
 					</div>
 					<div className="item wow fadeInUpBig animated animated" data-number="246"
 							 style={{visibility: "visible"}}>
-						<FontAwesomeIcon icon={faCamera}/>
-						<p id="number4" className="number">246</p>
-						<p>Photos taken</p>
+						<FontAwesomeIcon icon={faGraduationCap}/>
+						<p id="number4" className="number">10</p>
+						<p>Оценка ВП</p>
 					</div>
 				</div>
 			</div>

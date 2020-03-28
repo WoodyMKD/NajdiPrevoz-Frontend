@@ -1600,3 +1600,51 @@ a,
 
 /* end 767px */
 
+
+
+
+
+
+
+
+
+
+
+.app-trips-container {
+    background-color: white;
+    text-align: center;
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 16px;
+    margin-top: 1rem;
+}
+
+.trips-header {
+    border-bottom: 2px solid;
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 5px;
+}
+
+.trips-content {
+    padding: 5px;
+}
+
+.city-info {
+    width: 100%;
+    background-color: #1d1d25;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+}
+
+.city-info .text {
+    color: #fbff00;
+    font-weight: 700;
+    font-size: x-large;
+}
+
+.city-info .form {
+    text-align: right;
+}

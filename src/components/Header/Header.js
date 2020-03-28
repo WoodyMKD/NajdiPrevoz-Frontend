@@ -4,7 +4,7 @@ import {withRouter} from 'react-router';
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-import {faSignOutAlt, faUserAlt} from "@fortawesome/free-solid-svg-icons";
+import {faCar, faHome, faSignOutAlt, faUserAlt} from "@fortawesome/free-solid-svg-icons";
 
 import './Header.css';
 
@@ -58,16 +58,16 @@ const Header = (props) => {
 		<Navbar dark expand="md">
 			<Container>
 				<NavbarBrand tag={Link} to="/">
-					<img src="img/logo-no-line.png" alt="logo"/>
+					<img src="img/logo.png" alt="logo"/>
 				</NavbarBrand>
 				<NavbarToggler onClick={toggle}/>
 				<Collapse isOpen={isOpen} navbar>
 					<Nav className="mr-auto" navbar>
 						<NavItem>
-							<NavLink tag={Link} to="/">Почетна</NavLink>
+							<NavLink tag={Link} to="/"><FontAwesomeIcon icon={faHome}/> Почетна</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink tag={Link} to="/trips">Понуди</NavLink>
+							<NavLink tag={Link} to="/trips"><FontAwesomeIcon icon={faCar}/> Понуди</NavLink>
 						</NavItem>
 					</Nav>
 					{authMenu}

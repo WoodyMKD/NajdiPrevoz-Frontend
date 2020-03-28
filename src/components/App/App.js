@@ -7,9 +7,9 @@ import {CSSTransition, TransitionGroup} from "react-transition-group";
 import { ACCESS_TOKEN } from '../../utils/constants';
 import AppTripsRepository from "../../services/appTripService";
 import authService from "../../services/authService";
-import {notificationSuccess} from "../../utils/notifications";
+import {notificationError, notificationSuccess} from "../../utils/notifications";
 
-import AppTrips from "../Trips/AppTrips/AppTrips";
+import AppTrips from "../Trips/AppTrips";
 import LoginForm from "../Auth/Login/Login";
 import RegisterForm from "../Auth/Register/Register";
 import Header from "../Header/Header";
@@ -25,12 +25,16 @@ class App extends Component {
     this.state = {
       currentUser: null,
       isAuthenticated: false,
+      cityFrom: "Скопје",
+      cityTo: "Велес",
       appTrips: []
     };
 
     this.finishLoading = this.finishLoading.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
+    this.loadFeaturedAppTrips = this.loadFeaturedAppTrips.bind(this);
     this.loadAppTrips = this.loadAppTrips.bind(this);
+    this.onCityChange = this.onCityChange.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -46,7 +50,7 @@ class App extends Component {
         currentUser: response,
         isAuthenticated: true
       });
-      if(this.state.isAuthenticated) this.loadAppTrips();
+      if(this.state.isAuthenticated) this.loadFeaturedAppTrips();
       else this.finishLoading();
     }).catch((error) => {
             console.log(error);
@@ -54,7 +58,7 @@ class App extends Component {
     this.finishLoading();
   }
 
-  loadAppTrips = (page=0) => {
+  loadFeaturedAppTrips = (page=0) => {
     AppTripsRepository.getTrips().then((data) => {
       this.setState({
           appTrips: data.content
@@ -64,6 +68,36 @@ class App extends Component {
     }).catch((error) => {
       console.log(error);
     });
+  };
+
+  loadAppTrips = (cityFrom, cityTo, page=0) => {
+    AppTripsRepository.getTrips().then((data) => {
+      this.setState({
+        appTrips: data.content
+      });
+      this.finishLoading();
+      console.log(page);
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+
+  onCityChange = (cityFrom, cityTo, redirect) => {
+    if(cityFrom === cityTo) {
+      store.addNotification({
+        ...notificationError,
+        message: "Изберете два различни градови!"
+      });
+    } else {
+      this.setState({
+        cityFrom: cityFrom,
+        cityTo: cityTo
+      });
+
+      console.log(this.state);
+
+      if(redirect === true) this.props.history.push("/trips");
+    }
   };
 
   handleRegister() {
@@ -124,10 +158,10 @@ class App extends Component {
                 <RegisterForm onRegister={this.handleRegister}/>
               }/>
               <Route path={"/trips"} exact render={() =>
-                <AppTrips onPageClick={this.loadAppTrips} appTrips={this.state.appTrips}/>
+                <AppTrips onPageClick={this.loadFeaturedAppTrips} appTrips={this.state.appTrips} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange}/>
               }/>
               <Route path={"/"} exact render={() =>
-                <Home />
+                <Home onCityChange={this.onCityChange} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo}/>
               }/>
               <Route>
                 <Redirect to={"/"} />

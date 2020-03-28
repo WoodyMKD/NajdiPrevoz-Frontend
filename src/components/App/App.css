@@ -48,3 +48,8 @@ div.transition-group {
 .notification-success, .notification-success .timer {
     background-color: #2b8c41d4 !important;
 }
+
+.form-control:focus {
+    border-color: black !important;
+    box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0.28) !important;;
+}
