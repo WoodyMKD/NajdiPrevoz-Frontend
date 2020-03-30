@@ -1,8 +1,9 @@
 import { ACCESS_TOKEN } from './constants';
 
-export const request = (options) => {
+export const request = (options, additionalHeaders) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
+        ...additionalHeaders
     });
     
     if(localStorage.getItem(ACCESS_TOKEN)) {

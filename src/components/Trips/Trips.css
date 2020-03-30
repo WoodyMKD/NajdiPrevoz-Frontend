@@ -52,3 +52,19 @@
 .tab-content {
     padding: 0 15px;
 }
+
+.pagination {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.page-item {
+    cursor: pointer;
+}
+
+.action-buttons {
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}

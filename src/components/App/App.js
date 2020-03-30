@@ -9,7 +9,7 @@ import AppTripsRepository from "../../services/appTripService";
 import authService from "../../services/authService";
 import {notificationError, notificationSuccess} from "../../utils/notifications";
 
-import AppTrips from "../Trips/AppTrips";
+import Trips from "../Trips/Trips";
 import LoginForm from "../Auth/Login/Login";
 import RegisterForm from "../Auth/Register/Register";
 import Header from "../Header/Header";
@@ -26,7 +26,7 @@ class App extends Component {
       currentUser: null,
       isAuthenticated: false,
       cityFrom: "Скопје",
-      cityTo: "Велес",
+      cityTo: "Крива Паланка",
       featuredAppTrips: []
     };
 
@@ -62,7 +62,6 @@ class App extends Component {
         featuredAppTrips: data.content
       });
       this.finishLoading();
-      console.log(page);
     }).catch((error) => {
       console.log(error);
     });
@@ -79,8 +78,6 @@ class App extends Component {
         cityFrom: cityFrom,
         cityTo: cityTo
       });
-
-      console.log(this.state);
 
       if(redirect === true) this.props.history.push("/trips");
     }
@@ -144,7 +141,7 @@ class App extends Component {
                 <RegisterForm onRegister={this.handleRegister}/>
               }/>
               <Route path={"/trips"} exact render={() =>
-                <AppTrips cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange}/>
+                <Trips cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange}/>
               }/>
               <Route path={"/"} exact render={() =>
                 <Home onCityChange={this.onCityChange} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo}/>

@@ -303,7 +303,6 @@ class RegisterForm extends Component {
 		authService.checkEmailAvailability(emailValue)
 			.then(response => {
 				if (response.available) {
-					console.log(response);
 					this.setState({
 						email: {
 							value: emailValue,

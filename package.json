@@ -16,6 +16,7 @@
     "react-loading-overlay": "^1.0.1",
     "react-moment": "^0.9.7",
     "react-notifications-component": "^2.4.0",
+    "react-paginate": "^6.3.2",
     "react-router": "latest",
     "react-scripts": "^3.4.0",
     "react-transition-group": "^4.3.0",

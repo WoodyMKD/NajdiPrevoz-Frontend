@@ -16,6 +16,8 @@ const Header = (props) => {
 
 	let authMenu;
 
+	// TODO: Protected LINKS
+
 	const soonNotification = () => {
 		store.addNotification({
 			...notificationSoon,
@@ -27,16 +29,16 @@ const Header = (props) => {
 			<Nav className="ml-auto" navbar>
 				<NavItem>
 					<NavLink onClick={soonNotification}>
-                        <span className="btn btn-outline-secondary my-2 my-sm-0">
-                            <FontAwesomeIcon icon={faUserAlt}/> {props.currentUser.name}
-                        </span>
+						<span className="btn btn-outline-secondary my-2 my-sm-0">
+								<FontAwesomeIcon icon={faUserAlt}/> {props.currentUser.name}
+						</span>
 					</NavLink>
 				</NavItem>
 				<NavItem>
 					<NavLink onClick={props.onLogout}>
-                        <span className="btn btn-outline-secondary my-2 my-sm-0">
-                            <FontAwesomeIcon icon={faSignOutAlt}/>
-                        </span>
+						<span className="btn btn-outline-secondary my-2 my-sm-0">
+								<FontAwesomeIcon icon={faSignOutAlt}/>
+						</span>
 					</NavLink>
 				</NavItem>
 			</Nav>
@@ -78,7 +80,7 @@ const Header = (props) => {
 							<NavLink tag={Link} to="/trips"><FontAwesomeIcon icon={faCar}/> Понуди</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink tag={Link} onClick={soonNotification}><FontAwesomeIcon icon={faCalendarAlt}/> Мои Понуди</NavLink>
+							<NavLink className="cursor-pointer" onClick={soonNotification}><FontAwesomeIcon icon={faCalendarAlt}/> Мои Понуди</NavLink>
 						</NavItem>
 					</Nav>
 					{authMenu}
