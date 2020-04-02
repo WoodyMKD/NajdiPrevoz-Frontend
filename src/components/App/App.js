@@ -18,6 +18,12 @@ import Footer from "../Footer/Footer";
 import Home from "../Home/Home";
 
 import './App.css';
+import Profile from "../Profile/Profile";
+
+// TODO: Protected LINKS (authentication)
+// TODO: Validation methods for the forms
+// TODO: DropDown and DateTimePicker for forms
+// TODO: Create, Edit, Finish AppTrip
 
 class App extends Component {
   constructor(props) {
@@ -126,6 +132,8 @@ class App extends Component {
   render() {
     const location = this.props.location;
 
+    console.log(this.state.currentUser);
+
     const routing = (
       <section className="route-section">
         <TransitionGroup className="transition-group">
@@ -141,7 +149,10 @@ class App extends Component {
                 <RegisterForm onRegister={this.handleRegister}/>
               }/>
               <Route path={"/trips"} exact render={() =>
-                <Trips cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange}/>
+                <Trips cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange} currentUser={this.state.currentUser}/>
+              }/>
+              <Route path={"/my-profile"} exact render={() =>
+                <Profile />
               }/>
               <Route path={"/"} exact render={() =>
                 <Home onCityChange={this.onCityChange} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo}/>

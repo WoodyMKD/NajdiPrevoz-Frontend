@@ -1,0 +1,192 @@
+.profile-container .btn-group{
+    position: relative;
+    margin: 10px 1px;
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.profile-container .btn-group .btn{
+    padding: 6.5px 20px !important;
+}
+
+.profile-container .btn.btn-round{
+    border-radius: 30px !important;
+}
+
+.profile-container .btn-group .btn.btn-round{
+    border-radius: 30px !important;
+}
+
+.profile-container .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.profile-container .btn-group>.btn:not(:first-child) {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.profile-container .btn{
+    padding: 12px 30px !important;
+    margin: 5px 1px;
+    font-size: 12px !important;
+    box-shadow: 0 2px 2px 0 hsla(0,0%,60%,.14), 0 3px 1px -2px hsla(0,0%,60%,.2), 0 1px 5px 0 hsla(0,0%,60%,.12);
+}
+
+.profile-container .btn .material-icons{
+    margin-bottom: 6px;
+}
+.profile-container .btn.btn-sm{
+    border-radius:3px !important;
+}
+
+.profile-container .btn.btn-just-icon.btn-sm {
+    height: 30px;
+    min-width: 30px;
+    width: 30px;
+}
+
+.profile-container .btn.btn-just-icon {
+    font-size: 24px;
+    height: 41px;
+    min-width: 41px;
+    width: 41px;
+    padding: 0 !important;
+    overflow: hidden;
+    position: relative;
+    line-height: 41px;
+}
+
+.profile-container .btn.btn-just-icon.btn-round {
+    border-radius: 50% !important;
+}
+
+.profile-container .btn.btn-link{
+    background: transparent;
+    box-shadow: none;
+    color: #999;
+}
+
+.profile-container .btn.btn-info {
+    color: #fff !important;
+    background-color: #00bcd4 !important;
+    border-color: #00bcd4;
+    box-shadow: 0 2px 2px 0 rgba(0,188,212,.14),
+    0 3px 1px -2px rgba(0,188,212,.2),
+    0 1px 5px 0 rgba(0,188,212,.12) !important;
+}
+
+.profile-container .btn.btn-info:hover {
+    box-shadow: 0 14px 26px -12px rgba(0,188,212,.42),
+    0 4px 23px 0 rgba(0,0,0,.12),
+    0 8px 10px -5px rgba(0,188,212,.2) !important;
+    background: #00aec5 !important;
+}
+
+.profile-container .btn.btn-info.btn-link{
+    background-color: transparent !important;
+    color: #00bcd4 !important;
+    box-shadow:none !important;
+}
+
+.profile-container .btn.btn-success {
+    color: #fff !important;
+    background-color: #4caf50 !important;
+    border-color: #4caf50;
+    box-shadow: 0 2px 2px 0 rgba(76,175,80,.14),
+    0 3px 1px -2px rgba(76,175,80,.2),
+    0 1px 5px 0 rgba(76,175,80,.12) !important;
+}
+
+.profile-container .btn.btn-success:hover {
+    box-shadow: 0 14px 26px -12px rgba(76,175,80,.42),
+    0 4px 23px 0 rgba(0,0,0,.12),
+    0 8px 10px -5px rgba(76,175,80,.2) !important;
+    background: #47a44b  !important;
+}
+
+.profile-container .btn.btn-success.btn-link{
+    background-color: transparent !important;
+    color: #4caf50 !important;
+    box-shadow: none !important;
+}
+
+.profile-container .btn.btn-danger {
+    color: #fff !important;
+    background-color: #f44336 !important;
+    border-color: #f44336;
+    box-shadow: 0 2px 2px 0 rgba(244,67,54,.14),
+    0 3px 1px -2px rgba(244,67,54,.2),
+    0 1px 5px 0 rgba(244,67,54,.12) !important;
+}
+
+.profile-container .btn.btn-danger:hover {
+    box-shadow: 0 14px 26px -12px rgba(244,67,54,.42),
+    0 4px 23px 0 rgba(0,0,0,.12),
+    0 8px 10px -5px rgba(244,67,54,.2) !important;
+    background-color: #f33527 !important;
+}
+
+.profile-container .btn.btn-danger.btn-link{
+    background-color: transparent !important;
+    color: #f44336 !important;
+    box-shadow: none !important;
+}
+
+.vertical-align-center {
+    vertical-align: middle !important;
+}
+
+.profile-section {
+    border: 1px solid #dee2e6;
+}
+
+.profile-section-header {
+    text-align: center;
+    font-size: x-large;
+    font-weight: 500;
+    border: 10px solid #dee2e6;
+}
+
+.profile-section:not(:first-of-type) {
+    margin-top: 20px;
+}
+
+.phone-list {
+    border: 1px solid #dee2e6;
+    padding: 5px 15px;
+}
+
+.number-text, .number-button {
+    display: inline-block;
+}
+
+.number-button {
+    margin-left: 5px;
+    padding-left: 5px;
+    border-left: 1px solid black;
+    padding-right: 5px;
+    cursor: pointer;
+    background-color: #dee2e6;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: red;
+    float: right;
+}
+
+.number-text {
+    padding-left: 5px;
+}
+
+.number-wrapper {
+    margin: 0;
+    background-color: #0080005c;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.header-icon {
+    border-right: 3px solid #dee2e6;
+}

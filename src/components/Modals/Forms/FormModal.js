@@ -1,63 +1,102 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
-import AddEditForm from './AddEditForm/AddEditForm'
-import {faPlusCircle, faPlusSquare} from "@fortawesome/free-solid-svg-icons";
+import AddAppTripForm from './AddAppTripForm/AddAppTripForm'
+import {faPencilAlt, faPlusCircle, faPlusSquare} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import AddEditCarModalForm from "./AddEditCarModalForm/AddEditCarModalForm";
+import AddTelNumberModalForm from "./AddTelNumberModalForm/AddTelNumberModalForm";
 
 class FormModal extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			opened: false
-		}
+
+		console.log(props);
 	}
 
-	toggle = () => {
-		this.setState(prevState => ({
-			opened: !prevState.opened
-		}))
-	};
-
 	render() {
-		const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>;
+		const closeBtn = <button className="close" onClick={this.props.toggleFunction}>&times;</button>;
 
 		const action = this.props.action;
 		const label = this.props.buttonLabel;
 
 		let button = '';
 		let title = '';
+		let form = '';
 
-		if(action === 'Edit'){
-			button = <Button
-				color="warning"
-				onClick={this.toggle}
-				style={{float: "left", marginRight:"10px"}}>
-				<FontAwesomeIcon icon={faPlusSquare}/> {label}
-			</Button>;
-			title = 'Edit Item'
-		} else if (action === 'Create') {
+		if (action === 'CreateAppTrip') {
 			button = <Button
 				color="success"
-				onClick={this.toggle}
+				onClick={this.props.toggleFunction}
 				style={{float: "left", marginRight:"10px"}}>
 				<FontAwesomeIcon icon={faPlusCircle}/> {label}
 			</Button>;
-			title = 'Нова понуда'
+			title = 'Нова понуда';
+			form = (
+				<AddAppTripForm
+					createTrip={this.props.createTrip}
+					updateState={this.props.updateState}
+					item={this.props.item}
+					cityFrom={this.props.cityFrom}
+					cityTo={this.props.cityTo}
+					isModalLoading={this.props.isModalLoading}
+				/>
+			);
+		} else if (action === 'EditCar') {
+			button = (
+				<button type="button" className="btn btn-success btn-round btn-just-icon btn-sm" onClick={this.props.toggleFunction}>
+					<FontAwesomeIcon className="material-icons" icon={faPencilAlt}/>
+				</button>
+			);
+			title = 'Измени возило';
+
+			form = (
+				<AddEditCarModalForm
+					editCar={this.props.editCar}
+					car={this.props.car}
+					isModalLoading={this.props.isModalLoading}
+				/>
+			);
+		} else if (action === 'AddCar') {
+			button = <Button
+				color="success"
+				onClick={this.props.toggleFunction}
+				style={{float: "left", marginRight:"10px"}}>
+				<FontAwesomeIcon icon={faPlusCircle}/> {label}
+			</Button>;
+			title = 'Ново возило';
+
+			form = (
+				<AddEditCarModalForm
+					addCar={this.props.addCar}
+					isModalLoading={this.props.isModalLoading}
+				/>
+			);
+		} else if (action === 'AddTelNumber') {
+			button = <Button
+				color="success"
+				onClick={this.props.toggleFunction}
+				style={{float: "left", marginRight: "10px"}}>
+				<FontAwesomeIcon icon={faPlusCircle}/> {label}
+			</Button>;
+			title = 'Нов број';
+
+			form = (
+				<AddTelNumberModalForm
+					addTelNumber={this.props.addTelNumber}
+					isModalLoading={this.props.isModalLoading}
+				/>
+			);
 		}
 
 
 		return (
 			<span>
 				{button}
-				<Modal isOpen={this.state.opened} toggle={this.toggle} className={this.props.className}>
-					<ModalHeader toggle={this.toggle} close={closeBtn}>{title}</ModalHeader>
+				<Modal isOpen={this.props.modalOpened} toggle={this.props.toggleFunction} className={this.props.className}>
+					<ModalHeader toggle={this.props.toggleFunction} close={closeBtn}>{title}</ModalHeader>
 					<ModalBody>
-						<AddEditForm
-							createTrip={this.props.createTrip}
-							updateState={this.props.updateState}
-							toggle={this.toggle}
-							item={this.props.item} />
+						{form}
 					</ModalBody>
 				</Modal>
 			</span>

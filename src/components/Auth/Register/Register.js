@@ -128,48 +128,50 @@ class RegisterForm extends Component {
 
 		return (
 			<Container>
-				<Form onSubmit={this.handleSubmit} className="needs-validation" noValidate>
+				<div className="page-container">
+					<Form onSubmit={this.handleSubmit} className="needs-validation" noValidate>
 
-					{alerts}
+						{alerts}
 
-					<FormGroup>
-						<Label for="name">Име и презиме: </Label>
-						<CustomInput name="name" id="name" inputType="text" placeholder="Име и презиме"
-												 validationFun={this.validateName} parentFunction={this.handleInputChange}
-												 isValid={this.state.name.valid.status} formValidated={this.state.formValidated}/>
-						<FormFeedback>{this.state.name.valid.errorMsg}</FormFeedback>
-					</FormGroup>
+						<FormGroup>
+							<Label for="name">Име и презиме: </Label>
+							<CustomInput name="name" id="name" inputType="text" placeholder="Име и презиме"
+													 validationFun={this.validateName} parentFunction={this.handleInputChange}
+													 isValid={this.state.name.valid.status} formValidated={this.state.formValidated}/>
+							<FormFeedback>{this.state.name.valid.errorMsg}</FormFeedback>
+						</FormGroup>
 
-					<FormGroup>
-						<Label for="username">Корисничко име</Label>
-						<CustomInput name="username" id="username" inputType="text" placeholder="Корисничко име"
-												 validationFun={this.validateUsername} parentFunction={this.handleInputChange}
-												 isValid={this.state.username.valid.status} formValidated={this.state.formValidated}
-												 onBlur={this.validateUsernameAvailability}/>
-						<FormFeedback>{this.state.username.valid.errorMsg}</FormFeedback>
-					</FormGroup>
+						<FormGroup>
+							<Label for="username">Корисничко име</Label>
+							<CustomInput name="username" id="username" inputType="text" placeholder="Корисничко име"
+													 validationFun={this.validateUsername} parentFunction={this.handleInputChange}
+													 isValid={this.state.username.valid.status} formValidated={this.state.formValidated}
+													 onBlur={this.validateUsernameAvailability}/>
+							<FormFeedback>{this.state.username.valid.errorMsg}</FormFeedback>
+						</FormGroup>
 
-					<FormGroup>
-						<Label for="email">Е-Пошта</Label>
-						<CustomInput name="email" id="email" inputType="text" placeholder="Е-Пошта"
-												 validationFun={this.validateEmail} parentFunction={this.handleInputChange}
-												 isValid={this.state.email.valid.status} formValidated={this.state.formValidated}
-												 onBlur={this.validateEmailAvailability}/>
-						<FormFeedback>{this.state.email.valid.errorMsg}</FormFeedback>
-					</FormGroup>
+						<FormGroup>
+							<Label for="email">Е-Пошта</Label>
+							<CustomInput name="email" id="email" inputType="text" placeholder="Е-Пошта"
+													 validationFun={this.validateEmail} parentFunction={this.handleInputChange}
+													 isValid={this.state.email.valid.status} formValidated={this.state.formValidated}
+													 onBlur={this.validateEmailAvailability}/>
+							<FormFeedback>{this.state.email.valid.errorMsg}</FormFeedback>
+						</FormGroup>
 
-					<FormGroup>
-						<Label for="password">Лозинка</Label>
-						<CustomInput name="password" id="password" inputType="password" placeholder="Лозинка"
-												 validationFun={this.validatePassword} parentFunction={this.handleInputChange}
-												 isValid={this.state.password.valid.status} formValidated={this.state.formValidated}/>
-						<FormFeedback>{this.state.password.valid.errorMsg}</FormFeedback>
-					</FormGroup>
+						<FormGroup>
+							<Label for="password">Лозинка</Label>
+							<CustomInput name="password" id="password" inputType="password" placeholder="Лозинка"
+													 validationFun={this.validatePassword} parentFunction={this.handleInputChange}
+													 isValid={this.state.password.valid.status} formValidated={this.state.formValidated}/>
+							<FormFeedback>{this.state.password.valid.errorMsg}</FormFeedback>
+						</FormGroup>
 
-					<Button color="primary" block type="submit">
-						Регистрирај се
-					</Button>
-				</Form>
+						<Button color="primary" block type="submit">
+							Регистрирај се
+						</Button>
+					</Form>
+				</div>
 			</Container>
 		);
 	}

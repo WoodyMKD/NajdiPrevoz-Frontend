@@ -1,3 +1,5 @@
+import {store} from "react-notifications-component";
+
 export const notificationSuccess = {
     title: "Успешна акција!",
     type: "success",
@@ -36,4 +38,10 @@ export const notificationSoon = {
         duration: 3500,
         onScreen: true
     }
+};
+
+export const soonNotification = () => {
+    store.addNotification({
+        ...notificationSoon,
+    });
 };

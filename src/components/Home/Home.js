@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, Form, FormGroup, Input, Row} from "reactstrap";
+import {Col, Form, FormGroup, Row} from "reactstrap";
 
 import Featured from "./Featured/Featured";
 import Facts from "./Facts/Facts";
@@ -7,6 +7,7 @@ import Testimonials from "./Testimonials/Testimonials";
 
 import './Home.css';
 import {allCities} from "../../utils/constants";
+import DropdownList from 'react-widgets/lib/DropdownList'
 
 class Home extends React.Component {
 
@@ -18,6 +19,7 @@ class Home extends React.Component {
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleDropdownInputChange = this.handleDropdownInputChange.bind(this);
 	}
 
 	handleInputChange(event) {
@@ -30,6 +32,12 @@ class Home extends React.Component {
 		});
 	}
 
+	handleDropdownInputChange(value, stateName) {
+		this.setState({
+			[stateName] : value
+		});
+	}
+
 	handleSubmit(event) {
 		event.preventDefault();
 
@@ -37,12 +45,13 @@ class Home extends React.Component {
 	}
 
 	render() {
-		let allCitiesOptions;
-		allCitiesOptions = allCities.map((city, index) => {
+		let ValueInput = ({item}, prefix) => {
 			return (
-				<option key={index}>{city}</option>
+				<span>
+    			<strong>{prefix}</strong>{item}
+ 	 			</span>
 			);
-		});
+		};
 
 		return (
 			<div>
@@ -62,16 +71,32 @@ class Home extends React.Component {
 											<div className="row">
 												<div className="col-md-6">
 													<FormGroup>
-														<Input type="select" name="cityFrom" defaultValue={this.props.cityFrom} onChange={this.handleInputChange}>
-															{allCitiesOptions}
-														</Input>
+														<DropdownList
+															filter={(item, searchTerm, idx) => {
+																return item.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
+															}}
+															name="cityFrom"
+															id="cityFrom"
+															data={allCities}
+															onChange={value => this.handleDropdownInputChange(value, "cityFrom")}
+															defaultValue={this.props.cityFrom}
+															valueComponent={item => ValueInput(item, "Од: ")}
+														/>
 													</FormGroup>
 												</div>
 												<div className="col-md-6">
 													<FormGroup>
-														<Input type="select" name="cityTo" defaultValue={this.props.cityTo} onChange={this.handleInputChange}>
-															{allCitiesOptions}
-														</Input>
+														<DropdownList
+															filter={(item, searchTerm, idx) => {
+																return item.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
+															}}
+															name="cityTo"
+															id="cityTo"
+															data={allCities}
+															onChange={value => this.handleDropdownInputChange(value, "cityTo")}
+															defaultValue={this.props.cityTo}
+															valueComponent={item => ValueInput(item, "До: ")}
+														/>
 													</FormGroup>
 												</div>
 												<div className="col-md-12">

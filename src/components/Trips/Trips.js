@@ -4,7 +4,6 @@ import {
 	Container,
 	Form,
 	FormGroup,
-	Input,
 	Nav,
 	NavItem,
 	NavLink,
@@ -27,6 +26,7 @@ import AppTripsService from "../../services/appTripService";
 import FbTripsService from "../../services/fbTripService";
 import FacebookAppTripRow from "./FacebookTripRow/FacebookTripRow";
 import FormModal from "../Modals/Forms/FormModal";
+import DropdownList from 'react-widgets/lib/DropdownList'
 
 class Trips extends Component {
 
@@ -46,12 +46,15 @@ class Trips extends Component {
 			isListLoading: false,
 			cityFrom: this.props.cityFrom,
 			cityTo: this.props.cityTo,
-			activeTab: '1'
+			activeTab: '1',
+			isModalLoading: false,
+			addAppTripModalOpened: false
 		};
 		this.loadTrips = this.loadTrips.bind(this);
 		this.createTrip = this.createTrip.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleDropdownInputChange = this.handleDropdownInputChange.bind(this);
 		this.handleAppTripsPageChange = this.handleAppTripsPageChange.bind(this);
 		this.handleFbTripsPageChange = this.handleFbTripsPageChange.bind(this);
 	}
@@ -60,6 +63,12 @@ class Trips extends Component {
 		this.loadTrips(this.state.cityFrom, this.state.cityTo);
 	}
 
+	toggleAddAppTripModal = () => {
+		this.setState(prevState => ({
+			addAppTripModalOpened: !prevState.addAppTripModalOpened
+		}));
+	};
+
 	loadTrips = (cityFrom, cityTo, flag=0, page=0) => {
 		//flag: 0 - both; 1 - appTrips; 2 - fbTrips
 
@@ -67,11 +76,12 @@ class Trips extends Component {
 			isListLoading: true
 		});
 
-		const appTrips = AppTripsService.getTrips(page);
+		const appTrips = AppTripsService.getTripsByCity(cityFrom, cityTo, page);
 		const fbTrips = FbTripsService.getTrips(page);
 
 		if(flag === 0) {
 			Promise.all([appTrips, fbTrips]).then((responses) => {
+				console.log(responses[0]);
 				this.setState({
 					isListLoading: false,
 					appTrips: responses[0].content,
@@ -79,6 +89,10 @@ class Trips extends Component {
 					fbTripsPagination: {
 						page: responses[1].pageable.pageNumber,
 						totalPages: responses[1].totalPages
+					},
+					appTripsPagination: {
+						page: responses[0].pageable.pageNumber,
+						totalPages: responses[0].totalPages
 					}
 				});
 			}).catch((error) => {
@@ -114,25 +128,36 @@ class Trips extends Component {
 	};
 
 	createTrip = (newTrip) => {
-		// ConsultationService.addConsultationTerm(newTerm).then((response)=>{
-		// 	const newTerm = response.data;
-		// 	this.setState((prevState) => {
-		// 		const newTermsRef = [...prevState.terms, newTerm];
-		// 		//or
-		// 		//const terms = prevState.terms.concat(newTerm);
-		// 		return {
-		// 			"terms": newTermsRef
-		// 		}
-		// 	});
-		// });
+		this.setState({
+			isModalLoading: true,
+			isListLoading: true
+		});
+
+		return AppTripsService.createTrip(newTrip).then((response) => {
+			this.loadTrips(this.state.cityFrom, this.state.cityTo);
+			this.setState((prevState) => {
+				return {
+					isModalLoading: false,
+					addAppTripModalOpened: false
+				}
+			});
+		})
 	};
 
 	handleSubmit(event) {
 		event.preventDefault();
 
-		// refresh the home page form also
 		this.props.onCityChange(this.state.cityFrom, this.state.cityTo, false);
-		this.loadTrips(this.state.cityFrom, this.state.cityTo);
+		// refresh the home page form also
+		if(this.state.cityFrom !== this.state.cityTo) {
+			this.loadTrips(this.state.cityFrom, this.state.cityTo);
+		}
+	}
+
+	handleDropdownInputChange(value, stateName) {
+		this.setState({
+			[stateName] : value
+		});
 	}
 
 	handleInputChange(event) {
@@ -146,6 +171,7 @@ class Trips extends Component {
 	}
 
 	handleAppTripsPageChange(page) {
+		console.log(page);
 		this.loadTrips(this.props.cityFrom, this.props.cityTo, 1, page.selected);
 	}
 
@@ -161,13 +187,6 @@ class Trips extends Component {
 				});
 			}
 		};
-
-		let allCitiesOptions;
-		allCitiesOptions = allCities.map((city, index) => {
-			return (
-				<option key={index}>{city}</option>
-			);
-		});
 
 		let appTripRows;
 		if (this.state.appTrips.length !== 0) {
@@ -194,7 +213,7 @@ class Trips extends Component {
 													 previousLinkClassName={"page-link"}
 													 nextLinkClassName={"page-link"}
 													 forcePage={this.state.appTripsPagination.page}
-													 onPageChange={this.handleAppTripsPageChange()}
+													 onPageChange={this.handleAppTripsPageChange}
 													 containerClassName={"pagination justify-content-center"}
 													 activeClassName={"active"}/>
 					</Col>
@@ -256,6 +275,14 @@ class Trips extends Component {
 			);
 		}
 
+		let ValueInput = ({item}, prefix) => {
+			return (
+				<span>
+    			<strong>{prefix}</strong>{item}
+ 	 			</span>
+			);
+		};
+
 		return (
 			<Container className="mt-3">
 				<Form className="row" onSubmit={this.handleSubmit}>
@@ -269,16 +296,32 @@ class Trips extends Component {
 									<div className="row">
 										<div className="col-md-5">
 											<FormGroup>
-												<Input type="select" name="cityFrom" defaultValue={this.props.cityFrom} onChange={this.handleInputChange}>
-													{allCitiesOptions}
-												</Input>
+												<DropdownList
+													filter={(item, searchTerm, idx) => {
+														return item.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
+													}}
+													name="cityFrom"
+													id="cityFrom"
+													data={allCities}
+													defaultValue={this.props.cityFrom}
+													onChange={value => this.handleDropdownInputChange(value, "cityFrom")}
+													valueComponent={item => ValueInput(item, "Од: ")}
+												/>
 											</FormGroup>
 										</div>
 										<div className="col-md-5">
 											<FormGroup>
-												<Input type="select" name="cityTo" defaultValue={this.props.cityTo} onChange={this.handleInputChange}>
-													{allCitiesOptions}
-												</Input>
+												<DropdownList
+													filter={(item, searchTerm, idx) => {
+														return item.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
+													}}
+													name="cityTo"
+													id="cityTo"
+													data={allCities}
+													defaultValue={this.props.cityTo}
+													onChange={value => this.handleDropdownInputChange(value, "cityTo")}
+													valueComponent={item => ValueInput(item, "До: ")}
+												/>
 											</FormGroup>
 										</div>
 										<div className="col-md-2">
@@ -322,7 +365,8 @@ class Trips extends Component {
 							<TabPane tabId="1">
 								<Row>
 									<div className="action-buttons">
-										<FormModal buttonLabel="Нова понуда" action="Create" createTrip={this.createTrip}/>
+										<FormModal buttonLabel="Нова понуда" action="CreateAppTrip" cityFrom={this.props.cityFrom} cityTo={this.props.cityTo} createTrip={this.createTrip}
+															 isModalLoading={this.state.isModalLoading} toggleFunction={this.toggleAddAppTripModal} modalOpened={this.state.addAppTripModalOpened}/>
 									</div>
 								</Row>
 								<Row>

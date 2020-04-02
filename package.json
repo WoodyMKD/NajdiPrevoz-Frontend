@@ -20,6 +20,8 @@
     "react-router": "latest",
     "react-scripts": "^3.4.0",
     "react-transition-group": "^4.3.0",
+    "react-widgets": "^4.5.0",
+    "react-widgets-moment": "^4.0.28",
     "reactstrap": "^8.4.1"
   },
   "scripts": {
@@ -44,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "globalize-webpack-plugin": "^3.0.0",
     "react-router-dom": "^5.1.2",
     "semantic-ui-react": "^0.88.2"
   }

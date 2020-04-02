@@ -82,34 +82,36 @@ class LoginForm extends React.Component {
 
     return (
       <Container>
-        <Form onSubmit={this.handleSubmit} noValidate>
+        <div className="page-container">
+          <Form onSubmit={this.handleSubmit} noValidate>
 
-          {alerts}
+            {alerts}
 
-          <FormGroup>
-            <Label for="username">Корисничко име / Е-Пошта:</Label>
-            <Input type="text"
-                   name="username"
-                   id="username"
-                   placeholder="Корисничко име / Е-Пошта"
-                   onChange={this.handleInputChange}
-                   required/>
-          </FormGroup>
+            <FormGroup>
+              <Label for="username">Корисничко име / Е-Пошта:</Label>
+              <Input type="text"
+                     name="username"
+                     id="username"
+                     placeholder="Корисничко име / Е-Пошта"
+                     onChange={this.handleInputChange}
+                     required/>
+            </FormGroup>
 
-          <FormGroup>
-            <Label for="password">Лозинка:</Label>
-            <Input type="password"
-                   name="password"
-                   id="password"
-                   placeholder="Лозинка"
-                   onChange={this.handleInputChange}
-                   required/>
-          </FormGroup>
+            <FormGroup>
+              <Label for="password">Лозинка:</Label>
+              <Input type="password"
+                     name="password"
+                     id="password"
+                     placeholder="Лозинка"
+                     onChange={this.handleInputChange}
+                     required/>
+            </FormGroup>
 
-          <Button color="primary" block type="submit">
-            Најави се
-          </Button>
-        </Form>
+            <Button color="primary" block type="submit">
+              Најави се
+            </Button>
+          </Form>
+        </div>
       </Container>
     )
   }

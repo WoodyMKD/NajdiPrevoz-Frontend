@@ -12,9 +12,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import Moment from 'react-moment';
+import * as moment from "moment";
 import 'moment/locale/mk';
 
 const appTripRow = (props) => {
+	console.log(props);
 	return (
 		<div className="col-md-4">
 			<div className="product product-border">
@@ -50,7 +52,7 @@ const appTripRow = (props) => {
 						</div>
 						<div className="col-12">
 							<p>
-								<FontAwesomeIcon icon={faSuitcaseRolling}/> Поаѓање: <Moment locale="mk" date={props.trip.startTime} format="Do MMMM, hh:mm" /> часот
+								<FontAwesomeIcon icon={faSuitcaseRolling}/> Поаѓање: <Moment locale="mk" date={moment.unix(props.trip.startTime)} format="Do MMMM, HH:mm" /> часот
 							</p>
 						</div>
 					</div>
@@ -64,7 +66,7 @@ const appTripRow = (props) => {
 				<div className="product-footer">
 					<div className="row">
 						<div className="col-md-12 text-center">
-							<p>Објавено на <Moment locale="mk" date={props.trip.startTime} format="Do MMMM, HH:mm" /> часот</p>
+							<p>Објавено на <Moment locale="mk" date={props.trip.creationDate} format="Do MMMM, HH:mm" /> часот</p>
 						</div>
 					</div>
 				</div>

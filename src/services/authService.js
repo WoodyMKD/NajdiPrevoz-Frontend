@@ -41,6 +41,64 @@ const authService = {
 			url: API_BASE_URL + "/user/me",
 			method: 'GET'
 		});
+	},
+
+	getUserCars: () => {
+		if(!localStorage.getItem(ACCESS_TOKEN)) {
+			return Promise.reject("Не најавен корисник!");
+		}
+
+		return request({
+			url: API_BASE_URL + "/user/cars",
+			method: 'GET'
+		});
+	},
+
+	addUserCar: (car) => {
+		if(!localStorage.getItem(ACCESS_TOKEN)) {
+			return Promise.reject("Не најавен корисник!");
+		}
+
+		return request({
+			url: API_BASE_URL + "/user/cars",
+			method: 'POST',
+			body: JSON.stringify(car)
+		});
+	},
+
+	updateUserCar: (car) => {
+		if(!localStorage.getItem(ACCESS_TOKEN)) {
+			return Promise.reject("Не најавен корисник!");
+		}
+
+		return request({
+			url: API_BASE_URL + "/user/cars/" + car.id,
+			method: 'PATCH',
+			body: JSON.stringify(car)
+		});
+	},
+
+	addUserTelNumber: (number) => {
+		if(!localStorage.getItem(ACCESS_TOKEN)) {
+			return Promise.reject("Не најавен корисник!");
+		}
+
+		return request({
+			url: API_BASE_URL + "/user/telNumbers",
+			method: 'POST',
+			body: JSON.stringify(number)
+		});
+	},
+
+	getUserTelNumbers: () => {
+		if(!localStorage.getItem(ACCESS_TOKEN)) {
+			return Promise.reject("Не најавен корисник!");
+		}
+
+		return request({
+			url: API_BASE_URL + "/user/telNumbers",
+			method: 'GET'
+		});
 	}
 };
 

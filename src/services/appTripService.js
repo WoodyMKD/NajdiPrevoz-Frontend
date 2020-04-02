@@ -7,7 +7,7 @@ const appTripService = {
         size = size || 10;
 
         const headers = {
-            'page': page,
+            'page': page.valueOf(),
             'size': size
         };
 
@@ -15,6 +15,31 @@ const appTripService = {
             url: API_BASE_URL + "/appTrips",
             method: 'GET'
         }, headers);
+    },
+
+    getTripsByCity: (cityFrom, cityTo, page) => {
+        page = page || 0;
+        const size = 10;
+
+        const headers = {
+            'page': page.valueOf(),
+            'size': size
+        };
+
+        return request({
+            url: API_BASE_URL + "/appTrips/byCity?cityFrom=" + cityFrom + "&cityTo=" + cityTo,
+            method: 'GET'
+        }, headers);
+    },
+
+    createTrip: (newTrip) => {
+        console.log(JSON.stringify(newTrip));
+
+        return request({
+            url: API_BASE_URL + "/appTrips",
+            method: 'POST',
+            body: JSON.stringify(newTrip)
+        }, {});
     }
 };
 

@@ -8,7 +8,7 @@ import {faCalendarAlt, faCar, faHome, faSignOutAlt, faUserAlt} from "@fortawesom
 
 import './Header.css';
 import {store} from "react-notifications-component";
-import {notificationSoon} from "../../utils/notifications";
+import {notificationSoon, soonNotification} from "../../utils/notifications";
 
 const Header = (props) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -16,19 +16,11 @@ const Header = (props) => {
 
 	let authMenu;
 
-	// TODO: Protected LINKS
-
-	const soonNotification = () => {
-		store.addNotification({
-			...notificationSoon,
-		});
-	};
-
 	if (props.isAuthenticated) {
 		authMenu = (
 			<Nav className="ml-auto" navbar>
 				<NavItem>
-					<NavLink onClick={soonNotification}>
+					<NavLink tag={Link} to="/my-profile">
 						<span className="btn btn-outline-secondary my-2 my-sm-0">
 								<FontAwesomeIcon icon={faUserAlt}/> {props.currentUser.name}
 						</span>
@@ -48,16 +40,16 @@ const Header = (props) => {
 			<Nav className="ml-auto" navbar>
 				<NavItem>
 					<NavLink tag={Link} to={"/login"}>
-                        <span className="btn btn-outline-secondary my-2 my-sm-0">
-                            Најава
-                        </span>
+						<span className="btn btn-outline-secondary my-2 my-sm-0">
+								Најава
+						</span>
 					</NavLink>
 				</NavItem>
 				<NavItem>
 					<NavLink tag={Link} to={"/register"}>
-                        <span className="btn btn-outline-secondary my-2 my-sm-0">
-                            Регистрација
-                        </span>
+						<span className="btn btn-outline-secondary my-2 my-sm-0">
+								Регистрација
+						</span>
 					</NavLink>
 				</NavItem>
 			</Nav>
