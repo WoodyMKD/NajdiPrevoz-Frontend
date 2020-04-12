@@ -184,7 +184,6 @@ class AddAppTripForm extends React.Component {
 
 		AuthService.getUserTelNumbers().then((response) => {
 			const numbers = response.map((response) => {
-				console.log(response);
 				return response.number;
 			});
 

@@ -132,8 +132,6 @@ class App extends Component {
   render() {
     const location = this.props.location;
 
-    console.log(this.state.currentUser);
-
     const routing = (
       <section className="route-section">
         <TransitionGroup className="transition-group">

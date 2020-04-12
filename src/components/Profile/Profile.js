@@ -22,6 +22,7 @@ class Profile extends Component {
 			isModalLoading: false,
 			addCarModalOpened: false,
 			editCarModalOpened: false,
+			editCarId: null,
 			addTelNumberModalOpened: false
 		};
 
@@ -56,9 +57,10 @@ class Profile extends Component {
 		})
 	};
 
-	toggleEditCarModal = () => {
+	toggleEditCarModal = (carId) => {
 		this.setState(prevState => ({
-			editCarModalOpened: !prevState.editCarModalOpened
+			editCarModalOpened: !prevState.editCarModalOpened,
+			editCarId: carId
 		}));
 	};
 
@@ -92,14 +94,12 @@ class Profile extends Component {
 	};
 
 	addTelNumber = (telNumber) => {
-		console.log(telNumber);
 		this.setState({
 			isModalLoading: true,
 			phoneNumberListLoading: true
 		});
 
 		return AuthService.addUserTelNumber(telNumber).then((response) => {
-			console.log(response);
 			this.loadPhoneNumbers();
 			this.setState(() => {
 				return {
@@ -131,7 +131,6 @@ class Profile extends Component {
 		});
 
 		AuthService.getUserTelNumbers().then((response) => {
-			console.log(response);
 			this.setState({
 				phoneNumbers: response,
 				phoneNumberListLoading: false
@@ -232,6 +231,9 @@ class Profile extends Component {
 						</div>
 					</LoadingOverlay>
 				</div>
+
+				<FormModal buttonLabel="Измени возило" action="EditCar" car={this.state.editCarId} editCar={this.editCar}
+									 isModalLoading={this.state.isModalLoading} toggleFunction={this.toggleEditCarModal} modalOpened={this.state.editCarModalOpened}/>
 			</Container>
 		);
 	}

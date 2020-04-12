@@ -118,6 +118,8 @@ class AddEditAppTripForm extends React.Component {
 			);
 		}
 
+
+
 		return (
 			<LoadingOverlay
 				active={this.props.isModalLoading}

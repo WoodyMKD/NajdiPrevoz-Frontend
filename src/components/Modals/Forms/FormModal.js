@@ -10,8 +10,6 @@ class FormModal extends Component {
 
 	constructor(props) {
 		super(props);
-
-		console.log(props);
 	}
 
 	render() {
@@ -43,11 +41,6 @@ class FormModal extends Component {
 				/>
 			);
 		} else if (action === 'EditCar') {
-			button = (
-				<button type="button" className="btn btn-success btn-round btn-just-icon btn-sm" onClick={this.props.toggleFunction}>
-					<FontAwesomeIcon className="material-icons" icon={faPencilAlt}/>
-				</button>
-			);
 			title = 'Измени возило';
 
 			form = (
