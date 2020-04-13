@@ -33,8 +33,6 @@ const appTripService = {
     },
 
     createTrip: (newTrip) => {
-        console.log(JSON.stringify(newTrip));
-
         return request({
             url: API_BASE_URL + "/appTrips",
             method: 'POST',

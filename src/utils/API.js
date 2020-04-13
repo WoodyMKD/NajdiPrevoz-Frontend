@@ -13,9 +13,6 @@ export const request = (options, additionalHeaders) => {
     const defaults = {headers: headers};
     options = Object.assign({}, defaults, options);
 
-    headers.forEach((value, key) => console.log(value + ":" + key));
-    console.log(options);
-
     return fetch(options.url, options)
     .then(response => 
         response.json().then(json => {

@@ -101,7 +101,7 @@ class RegisterForm extends Component {
 				}).catch(error => {
 				store.addNotification({
 					...notificationError,
-					message: error
+					message: error.toString()
 				});
 			});
 		}
@@ -299,7 +299,7 @@ class RegisterForm extends Component {
 			}).catch(error => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	}
@@ -336,7 +336,7 @@ class RegisterForm extends Component {
 			}).catch(error => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	}

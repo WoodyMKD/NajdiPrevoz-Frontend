@@ -1,11 +1,6 @@
 import React from 'react';
-import {Button, Form, FormGroup, Label, Input, Alert, FormFeedback, Col, Row} from 'reactstrap';
-import {allCities, MIN_PRICE} from "../../../../utils/constants";
-import DropdownList from 'react-widgets/lib/DropdownList'
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
+import {Alert, Button, Form, FormFeedback, FormGroup, Input, Label} from 'reactstrap';
 import LoadingOverlay from "react-loading-overlay";
-import * as moment from "moment";
-import AuthService from "../../../../services/authService";
 
 class AddEditAppTripForm extends React.Component {
 	constructor(props) {

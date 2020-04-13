@@ -1,17 +1,12 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
+import React, {Component} from 'react'
+import {Button, Modal, ModalBody, ModalHeader} from 'reactstrap'
 import AddAppTripForm from './AddAppTripForm/AddAppTripForm'
-import {faPencilAlt, faPlusCircle, faPlusSquare} from "@fortawesome/free-solid-svg-icons";
+import {faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import AddEditCarModalForm from "./AddEditCarModalForm/AddEditCarModalForm";
 import AddTelNumberModalForm from "./AddTelNumberModalForm/AddTelNumberModalForm";
 
 class FormModal extends Component {
-
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		const closeBtn = <button className="close" onClick={this.props.toggleFunction}>&times;</button>;
 

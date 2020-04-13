@@ -99,7 +99,6 @@ class AddAppTripForm extends React.Component {
 	};
 
 	handleDropdownInputChange(value, stateName) {
-		console.log(this.state);
 		if(stateName === "car" || stateName === "telNumber") {
 			this.setState({
 				[stateName]: {
@@ -177,7 +176,7 @@ class AddAppTripForm extends React.Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	}
@@ -199,7 +198,7 @@ class AddAppTripForm extends React.Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	}

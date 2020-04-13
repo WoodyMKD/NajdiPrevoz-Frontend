@@ -4,7 +4,7 @@ import {Redirect, withRouter} from "react-router";
 import ReactNotification, {store} from 'react-notifications-component'
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 
-import { ACCESS_TOKEN } from '../../utils/constants';
+import {ACCESS_TOKEN} from '../../utils/constants';
 import AppTripsRepository from "../../services/appTripService";
 import authService from "../../services/authService";
 import {notificationError, notificationSuccess} from "../../utils/notifications";
@@ -46,7 +46,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.loadCurrentUser();
+    if(localStorage.getItem(ACCESS_TOKEN)) {
+      this.loadCurrentUser();
+    } else {
+      this.finishLoading();
+    }
   }
 
   loadCurrentUser() {
@@ -59,7 +63,7 @@ class App extends Component {
     }).catch((error) => {
       store.addNotification({
         ...notificationError,
-        message: error
+        message: error.toString()
       });
     });
     this.finishLoading();
@@ -74,7 +78,7 @@ class App extends Component {
     }).catch((error) => {
       store.addNotification({
         ...notificationError,
-        message: error
+        message: error.toString()
       });
     });
   };
@@ -139,35 +143,39 @@ class App extends Component {
     const location = this.props.location;
 
     const routing = (
-      <TransitionGroup className="transition-group">
-        <CSSTransition
-          key={location.pathname}
-          timeout={{ enter: 350, exit: 350 }}
-          classNames={'fade'}>
-          <section className="route-section">
-            <Switch location={location}>
-              <Route path={"/login"} exact render={() =>
-                <LoginForm onLogin={this.handleLogin}/>
-              }/>
-              <Route path={"/register"} exact render={() =>
-                <RegisterForm onRegister={this.handleRegister}/>
-              }/>
-              <Route path={"/trips"} exact render={() =>
-                <Trips cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange} currentUser={this.state.currentUser}/>
-              }/>
-              <Route path={"/my-profile"} exact render={() =>
-                <Profile />
-              }/>
-              <Route path={"/"} exact render={() =>
-                <Home onCityChange={this.onCityChange} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo}/>
-              }/>
-              <Route>
-                <Redirect to={"/"} />
-              </Route>
-            </Switch>
-          </section>
-        </CSSTransition>
-      </TransitionGroup>
+      <section className="routing-section">
+        <TransitionGroup className="transition-group">
+          <CSSTransition
+            key={location.pathname}
+            timeout={{ enter: 350, exit: 350 }}
+            classNames={'fade'}>
+            <div className="routes">
+              <Switch location={location}>
+                <Route path={"/login"} exact render={() =>
+                  <LoginForm onLogin={this.handleLogin}/>
+                }/>
+                <Route path={"/register"} exact render={() =>
+                  <RegisterForm onRegister={this.handleRegister}/>
+                }/>
+                <Route path={"/trips"} exact render={() =>
+                  <Trips cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange} currentUser={this.state.currentUser}/>
+                }/>
+                <Route path={"/my-profile"} exact render={() =>
+                  <Profile />
+                }/>
+                <Route path={"/"} exact render={() =>
+                  <Home onCityChange={this.onCityChange} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo}/>
+                }/>
+                <Route>
+                  <Redirect to={"/"} />
+                </Route>
+              </Switch>
+
+              <Footer/>
+            </div>
+          </CSSTransition>
+        </TransitionGroup>
+      </section>
     );
 
     return (
@@ -181,8 +189,6 @@ class App extends Component {
           />
 
           {routing}
-
-          <Footer/>
         </div>
     );
   }

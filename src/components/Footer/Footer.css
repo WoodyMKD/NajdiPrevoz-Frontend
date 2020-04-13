@@ -47,7 +47,7 @@
 }
 
 .footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
     padding-top: 5px;
     width: 100%;
@@ -55,4 +55,5 @@
     border-top: 1px solid white;
     background: #15151e;
     background: linear-gradient(to bottom, #15151eeb, #15151e);
+    margin-top: 20px;
 }

@@ -7,8 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendarAlt, faCar, faHome, faSignOutAlt, faUserAlt} from "@fortawesome/free-solid-svg-icons";
 
 import './Header.css';
-import {store} from "react-notifications-component";
-import {notificationSoon, soonNotification} from "../../utils/notifications";
+import {soonNotification} from "../../utils/notifications";
 
 const Header = (props) => {
 	const [isOpen, setIsOpen] = useState(false);

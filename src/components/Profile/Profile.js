@@ -5,10 +5,9 @@ import {Col, Container, Row, Table} from "reactstrap";
 import AuthService from "../../services/authService";
 import LoadingOverlay from "react-loading-overlay";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCarSide, faPencilAlt, faPhone, faTimes, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faCarSide, faPhone, faTimes} from "@fortawesome/free-solid-svg-icons";
 import FormModal from "../Modals/Forms/FormModal";
 import CarTableRow from "./CarTableRow/CarTableRow";
-import AppTripsService from "../../services/appTripService";
 import {notificationError, notificationSuccess, soonNotification} from "../../utils/notifications";
 import {store} from "react-notifications-component";
 
@@ -63,7 +62,7 @@ class Profile extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	};
@@ -109,7 +108,7 @@ class Profile extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	};
@@ -136,7 +135,7 @@ class Profile extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	};
@@ -154,7 +153,7 @@ class Profile extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	};
@@ -172,7 +171,7 @@ class Profile extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	};

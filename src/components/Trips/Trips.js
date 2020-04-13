@@ -83,7 +83,6 @@ class Trips extends Component {
 
 		if(flag === 0) {
 			Promise.all([appTrips, fbTrips]).then((responses) => {
-				console.log(responses[0]);
 				this.setState({
 					isListLoading: false,
 					appTrips: responses[0].content,
@@ -98,9 +97,10 @@ class Trips extends Component {
 					}
 				});
 			}).catch((error) => {
+				console.log(error);
 				store.addNotification({
 					...notificationError,
-					message: error
+					message: error.toString()
 				});
 			});
 		} else if(flag === 1) {
@@ -116,7 +116,7 @@ class Trips extends Component {
 			}).catch((error) => {
 				store.addNotification({
 					...notificationError,
-					message: error
+					message: error.toString()
 				});
 			});
 		} else if(flag === 2) {
@@ -132,7 +132,7 @@ class Trips extends Component {
 			}).catch((error) => {
 				store.addNotification({
 					...notificationError,
-					message: error
+					message: error.toString()
 				});
 			});
 		}
@@ -160,7 +160,7 @@ class Trips extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error
+				message: error.toString()
 			});
 		});
 	};
