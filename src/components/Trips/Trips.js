@@ -27,6 +27,8 @@ import FbTripsService from "../../services/fbTripService";
 import FacebookAppTripRow from "./FacebookTripRow/FacebookTripRow";
 import FormModal from "../Modals/Forms/FormModal";
 import DropdownList from 'react-widgets/lib/DropdownList'
+import {store} from "react-notifications-component";
+import {notificationError, notificationSuccess} from "../../utils/notifications";
 
 class Trips extends Component {
 
@@ -96,7 +98,10 @@ class Trips extends Component {
 					}
 				});
 			}).catch((error) => {
-				console.log(error);
+				store.addNotification({
+					...notificationError,
+					message: error
+				});
 			});
 		} else if(flag === 1) {
 			appTrips.then((response) => {
@@ -109,7 +114,10 @@ class Trips extends Component {
 					}
 				});
 			}).catch((error) => {
-				console.log(error);
+				store.addNotification({
+					...notificationError,
+					message: error
+				});
 			});
 		} else if(flag === 2) {
 			fbTrips.then((response) => {
@@ -122,7 +130,10 @@ class Trips extends Component {
 					}
 				});
 			}).catch((error) => {
-				console.log(error);
+				store.addNotification({
+					...notificationError,
+					message: error
+				});
 			});
 		}
 	};
@@ -141,7 +152,17 @@ class Trips extends Component {
 					addAppTripModalOpened: false
 				}
 			});
-		})
+
+			store.addNotification({
+				...notificationSuccess,
+				message: "Успешно креирање на нова понуда."
+			});
+		}).catch((error) => {
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
+		});
 	};
 
 	handleSubmit(event) {
@@ -171,7 +192,6 @@ class Trips extends Component {
 	}
 
 	handleAppTripsPageChange(page) {
-		console.log(page);
 		this.loadTrips(this.props.cityFrom, this.props.cityTo, 1, page.selected);
 	}
 

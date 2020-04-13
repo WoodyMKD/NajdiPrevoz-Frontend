@@ -9,7 +9,8 @@ import {faCarSide, faPencilAlt, faPhone, faTimes, faTrashAlt} from "@fortawesome
 import FormModal from "../Modals/Forms/FormModal";
 import CarTableRow from "./CarTableRow/CarTableRow";
 import AppTripsService from "../../services/appTripService";
-import {soonNotification} from "../../utils/notifications";
+import {notificationError, notificationSuccess, soonNotification} from "../../utils/notifications";
+import {store} from "react-notifications-component";
 
 class Profile extends Component {
 	constructor(props) {
@@ -54,7 +55,17 @@ class Profile extends Component {
 					editCarModalOpened: false
 				}
 			});
-		})
+
+			store.addNotification({
+				...notificationSuccess,
+				message: "Успешна промена на постоечко возило."
+			});
+		}).catch((error) => {
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
+		});
 	};
 
 	toggleEditCarModal = (carId) => {
@@ -90,7 +101,17 @@ class Profile extends Component {
 					addCarModalOpened: false
 				}
 			});
-		})
+
+			store.addNotification({
+				...notificationSuccess,
+				message: "Успешно додавање на ново возило."
+			});
+		}).catch((error) => {
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
+		});
 	};
 
 	addTelNumber = (telNumber) => {
@@ -107,7 +128,17 @@ class Profile extends Component {
 					addTelNumberModalOpened: false
 				}
 			});
-		})
+
+			store.addNotification({
+				...notificationSuccess,
+				message: "Успешно додавање на нов телефонски број."
+			});
+		}).catch((error) => {
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
+		});
 	};
 
 	loadCars = () => {
@@ -121,7 +152,10 @@ class Profile extends Component {
 				carTableLoading: false
 			});
 		}).catch((error) => {
-			console.log(error);
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
 		});
 	};
 
@@ -136,7 +170,10 @@ class Profile extends Component {
 				phoneNumberListLoading: false
 			});
 		}).catch((error) => {
-			console.log(error);
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
 		});
 	};
 

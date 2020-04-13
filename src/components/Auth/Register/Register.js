@@ -14,6 +14,8 @@ import {
 } from '../../../utils/constants';
 
 import './Register.css';
+import {store} from "react-notifications-component";
+import {notificationError} from "../../../utils/notifications";
 
 class RegisterForm extends Component {
 	constructor(props) {
@@ -97,7 +99,10 @@ class RegisterForm extends Component {
 				.then(response => {
 					this.props.onRegister();
 				}).catch(error => {
-				console.log(error);
+				store.addNotification({
+					...notificationError,
+					message: error
+				});
 			});
 		}
 	}
@@ -292,7 +297,10 @@ class RegisterForm extends Component {
 					});
 				}
 			}).catch(error => {
-				console.log(error);
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
 		});
 	}
 
@@ -326,7 +334,10 @@ class RegisterForm extends Component {
 					});
 				}
 			}).catch(error => {
-				console.log(error);
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
 		});
 	}
 }

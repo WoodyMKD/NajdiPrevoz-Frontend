@@ -32,6 +32,13 @@ div.transition-group {
     position: relative;
 }
 
+section.route-section {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
 .btn-primary {
     color: black !important;
     font-weight: bold !important;;

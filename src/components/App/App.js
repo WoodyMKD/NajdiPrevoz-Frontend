@@ -57,7 +57,10 @@ class App extends Component {
       });
       this.finishLoading();
     }).catch((error) => {
-            console.log(error);
+      store.addNotification({
+        ...notificationError,
+        message: error
+      });
     });
     this.finishLoading();
   }
@@ -69,7 +72,10 @@ class App extends Component {
       });
       this.finishLoading();
     }).catch((error) => {
-      console.log(error);
+      store.addNotification({
+        ...notificationError,
+        message: error
+      });
     });
   };
 
@@ -133,12 +139,12 @@ class App extends Component {
     const location = this.props.location;
 
     const routing = (
-      <section className="route-section">
-        <TransitionGroup className="transition-group">
-          <CSSTransition
-            key={location.pathname}
-            timeout={{ enter: 350, exit: 350 }}
-            classNames={'fade'}>
+      <TransitionGroup className="transition-group">
+        <CSSTransition
+          key={location.pathname}
+          timeout={{ enter: 350, exit: 350 }}
+          classNames={'fade'}>
+          <section className="route-section">
             <Switch location={location}>
               <Route path={"/login"} exact render={() =>
                 <LoginForm onLogin={this.handleLogin}/>
@@ -159,9 +165,9 @@ class App extends Component {
                 <Redirect to={"/"} />
               </Route>
             </Switch>
-          </CSSTransition>
-        </TransitionGroup>
-      </section>
+          </section>
+        </CSSTransition>
+      </TransitionGroup>
     );
 
     return (

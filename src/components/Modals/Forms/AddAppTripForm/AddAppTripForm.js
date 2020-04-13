@@ -6,6 +6,8 @@ import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import LoadingOverlay from "react-loading-overlay";
 import * as moment from "moment";
 import AuthService from "../../../../services/authService";
+import {store} from "react-notifications-component";
+import {notificationError} from "../../../../utils/notifications";
 
 class AddAppTripForm extends React.Component {
 	constructor(props) {
@@ -173,7 +175,10 @@ class AddAppTripForm extends React.Component {
 				carDropDownLoading: false
 			});
 		}).catch((error) => {
-			console.log(error);
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
 		});
 	}
 
@@ -192,7 +197,10 @@ class AddAppTripForm extends React.Component {
 				telNumberDropDownLoading: false
 			});
 		}).catch((error) => {
-			console.log(error);
+			store.addNotification({
+				...notificationError,
+				message: error
+			});
 		});
 	}
 
