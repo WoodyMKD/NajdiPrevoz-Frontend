@@ -20,7 +20,7 @@ import AppTripRow from './AppTripRow/AppTripRow'
 import './Trips.css';
 import {faArrowRight, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {allCities} from "../../utils/constants";
+import {allCities, TRIP_STATUS} from "../../utils/constants";
 import classnames from 'classnames';
 import AppTripsService from "../../services/appTripService";
 import FbTripsService from "../../services/fbTripService";
@@ -78,7 +78,7 @@ class Trips extends Component {
 			isListLoading: true
 		});
 
-		const appTrips = AppTripsService.getTripsByCity(cityFrom, cityTo, page);
+		const appTrips = AppTripsService.getTripsByCity(cityFrom, cityTo, TRIP_STATUS.ACTIVE, page);
 		const fbTrips = FbTripsService.getTrips(page);
 
 		if(flag === 0) {

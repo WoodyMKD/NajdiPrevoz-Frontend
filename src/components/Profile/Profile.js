@@ -179,7 +179,7 @@ class Profile extends Component {
 	render() {
 		const carRows = this.state.cars.map((car) => {
 			return (
-					<CarTableRow key={car.id} car={car} isModalLoading={this.state.isModalLoading} toggleEditCarModal={this.toggleEditCarModal} editCarModalOpened={this.state.editCarModalOpened} editCar={this.editCar}/>
+				<CarTableRow key={car.id} car={car} isModalLoading={this.state.isModalLoading} toggleEditCarModal={this.toggleEditCarModal} editCarModalOpened={this.state.editCarModalOpened} editCar={this.editCar}/>
 			);
 		});
 

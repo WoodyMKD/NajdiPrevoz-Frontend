@@ -71,7 +71,7 @@ const Header = (props) => {
 							<NavLink tag={Link} to="/trips"><FontAwesomeIcon icon={faCar}/> Понуди</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink className="cursor-pointer" onClick={soonNotification}><FontAwesomeIcon icon={faCalendarAlt}/> Мои Понуди</NavLink>
+							<NavLink  tag={Link} to="/my-trips"><FontAwesomeIcon icon={faCalendarAlt}/> Мои Понуди</NavLink>
 						</NavItem>
 					</Nav>
 					{authMenu}

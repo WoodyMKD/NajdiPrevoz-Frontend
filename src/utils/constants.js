@@ -14,6 +14,12 @@ export const PASSWORD_MAX_LENGTH = 20;
 // TRIP CREATION CONSTANTS
 export const MIN_PRICE = 50;
 
+export const TRIP_STATUS = {
+    ACTIVE: "active",
+    FINISHED: "finished",
+    ALL: "all"
+};
+
 
 
 export const allCities = [

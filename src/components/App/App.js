@@ -19,6 +19,7 @@ import Home from "../Home/Home";
 
 import './App.css';
 import Profile from "../Profile/Profile";
+import MyTrips from "../MyTrips/MyTrips";
 
 // TODO: Protected LINKS (authentication)
 // TODO: Validation methods for the forms
@@ -162,6 +163,9 @@ class App extends Component {
                 }/>
                 <Route path={"/my-profile"} exact render={() =>
                   <Profile />
+                }/>
+                <Route path={"/my-trips"} exact render={() =>
+                  <MyTrips />
                 }/>
                 <Route path={"/"} exact render={() =>
                   <Home onCityChange={this.onCityChange} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo}/>
