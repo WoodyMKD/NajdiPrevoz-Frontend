@@ -178,8 +178,6 @@ class App extends Component {
                   <Redirect to={"/"} />
                 </Route>
               </Switch>
-
-              <Footer/>
             </div>
           </CSSTransition>
         </TransitionGroup>

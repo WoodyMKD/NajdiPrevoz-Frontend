@@ -16,6 +16,7 @@ import * as moment from "moment";
 import 'moment/locale/mk';
 
 const appTripRow = (props) => {
+	console.log(props);
 	return (
 		<div className="col-md-4">
 			<div className="product product-border">

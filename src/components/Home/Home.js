@@ -8,6 +8,7 @@ import Testimonials from "./Testimonials/Testimonials";
 import './Home.css';
 import {allCities} from "../../utils/constants";
 import DropdownList from 'react-widgets/lib/DropdownList'
+import Footer from "../Footer/Footer";
 
 class Home extends React.Component {
 
@@ -119,6 +120,7 @@ class Home extends React.Component {
 				<Featured/>
 				<Facts/>
 				<Testimonials/>
+                <Footer/>
 			</div>
 		);
 	}

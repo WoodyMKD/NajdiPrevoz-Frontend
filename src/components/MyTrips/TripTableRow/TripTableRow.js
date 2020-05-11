@@ -34,9 +34,11 @@ const tripTableRow = (props) => {
 		)
     }
 
+    console.log(props.trip);
+
 	return (
 		<tr key={props.trip.id}>
-			<td className="vertical-align-center"><Moment locale="mk" date={moment.unix(props.trip.creationDate)} format="Do MMMM, HH:mm" /></td>
+			<td className="vertical-align-center"><Moment locale="mk" date={props.trip.creationDate} format="Do MMMM, HH:mm" /></td>
 			<td className="vertical-align-center"><Moment locale="mk" date={moment.unix(props.trip.startTime)} format="Do MMMM, HH:mm" /></td>
 			<td className="vertical-align-center">{props.trip.status}</td>
 			<td className="td-actions text-center">

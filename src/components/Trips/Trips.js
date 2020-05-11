@@ -97,7 +97,8 @@ class Trips extends Component {
                         appTripsPagination: {
                             page: responses[0].response.pageable.pageNumber,
                             totalPages: responses[0].response.totalPages
-                        }
+                        },
+                        isAuthenticated: this.props.isAuthenticated
                     });
                 } else {
 					let errorMsg;
@@ -123,7 +124,8 @@ class Trips extends Component {
 					appTripsPagination: {
 						page: response.response.pageable.pageNumber,
 						totalPages: response.response.totalPages
-					}
+					},
+                    isAuthenticated: this.props.isAuthenticated
 				});
 			}).catch((error) => {
 				store.addNotification({
@@ -139,7 +141,8 @@ class Trips extends Component {
 					fbTripsPagination: {
 						page: response.response.pageable.pageNumber,
 						totalPages: response.response.totalPages
-					}
+					},
+                    isAuthenticated: this.props.isAuthenticated
 				});
 			}).catch((error) => {
 				store.addNotification({
