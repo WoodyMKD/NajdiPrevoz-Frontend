@@ -4,15 +4,15 @@ import { request } from '../utils/API';
 const authService = {
 	login: (loginRequest) => {
 		return request({
-			url: API_BASE_URL + "/auth/signin",
+			url: API_BASE_URL + "/login",
 			method: 'POST',
 			body: JSON.stringify(loginRequest)
 		});
 	},
 
-	signup: (signupRequest) => {
+	register: (signupRequest) => {
 		return request({
-			url: API_BASE_URL + "/auth/signup",
+			url: API_BASE_URL + "/register",
 			method: 'POST',
 			body: JSON.stringify(signupRequest)
 		});
@@ -20,14 +20,14 @@ const authService = {
 
 	checkUsernameAvailability: (username) => {
 		return request({
-			url: API_BASE_URL + "/user/checkUsernameAvailability?username=" + username,
+			url: API_BASE_URL + "/checkUsernameAvailability?username=" + username,
 			method: 'GET'
 		});
 	},
 
 	checkEmailAvailability: (email) => {
 		return request({
-			url: API_BASE_URL + "/user/checkEmailAvailability?email=" + email,
+			url: API_BASE_URL + "/checkEmailAvailability?email=" + email,
 			method: 'GET'
 		});
 	},

@@ -48,17 +48,17 @@ class LoginForm extends React.Component {
     } else {
       authService.login(loginRequest)
         .then(response => {
-          localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-          this.props.onLogin();
-        }).catch(error => {
-          if(error.status === 401 && error.message === "Bad credentials") {
-            error.message = "Внесовте невалидно корисничко име и лозинка!";
+          if(response.statusCode === 401) {
+              response.message = "Внесовте невалидно корисничко име и лозинка!";
+              this.setState({
+                  errorsVisible: true,
+                  errorMessage: response.message
+              });
+          } else {
+              localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+              this.props.onLogin();
           }
-          this.setState({
-            errorsVisible: true,
-            errorMessage: error.message
-          });
-        });
+        })
     }
   }
 

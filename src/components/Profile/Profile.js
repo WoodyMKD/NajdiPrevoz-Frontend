@@ -62,7 +62,7 @@ class Profile extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error.toString()
+				message: error.message
 			});
 		});
 	};
@@ -108,7 +108,7 @@ class Profile extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error.toString()
+				message: error.message
 			});
 		});
 	};
@@ -135,7 +135,7 @@ class Profile extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error.toString()
+				message: error.message
 			});
 		});
 	};
@@ -147,13 +147,13 @@ class Profile extends Component {
 
 		AuthService.getUserCars().then((response) => {
 			this.setState({
-				cars: response,
+				cars: response.response,
 				carTableLoading: false
 			});
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error.toString()
+				message: error.message
 			});
 		});
 	};
@@ -165,13 +165,13 @@ class Profile extends Component {
 
 		AuthService.getUserTelNumbers().then((response) => {
 			this.setState({
-				phoneNumbers: response,
+				phoneNumbers: response.response,
 				phoneNumberListLoading: false
 			});
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error.toString()
+				message: error.message
 			});
 		});
 	};

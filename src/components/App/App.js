@@ -57,14 +57,14 @@ class App extends Component {
   loadCurrentUser() {
     authService.getCurrentUser().then(response => {
       this.setState({
-        currentUser: response,
+        currentUser: response.response,
         isAuthenticated: true
       });
       this.finishLoading();
     }).catch((error) => {
       store.addNotification({
         ...notificationError,
-        message: error.toString()
+        message: error.message
       });
     });
     this.finishLoading();

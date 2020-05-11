@@ -162,7 +162,7 @@ class AddAppTripForm extends React.Component {
 		});
 
 		AuthService.getUserCars().then((response) => {
-			const cars = response.map((response) => {
+			const cars = response.response.map((response) => {
 				return {
 					id: response.id,
 					car: response.manufacturer + " " + response.model
@@ -176,7 +176,7 @@ class AddAppTripForm extends React.Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error.toString()
+				message: error.message
 			});
 		});
 	}
@@ -187,7 +187,7 @@ class AddAppTripForm extends React.Component {
 		});
 
 		AuthService.getUserTelNumbers().then((response) => {
-			const numbers = response.map((response) => {
+			const numbers = response.response.map((response) => {
 				return response.number;
 			});
 
@@ -198,7 +198,7 @@ class AddAppTripForm extends React.Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error.toString()
+				message: error.message
 			});
 		});
 	}

@@ -95,14 +95,15 @@ class RegisterForm extends Component {
 				errorMessage: "Пополнете ги бараните задолжителни полиња!"
 			});
 		} else {
-			authService.signup(signupRequest)
+			authService.register(signupRequest)
 				.then(response => {
 					this.props.onRegister();
 				}).catch(error => {
-				store.addNotification({
-					...notificationError,
-					message: error.toString()
-				});
+					console.log(error);
+					store.addNotification({
+						...notificationError,
+						message: error.message
+					});
 			});
 		}
 	}
@@ -265,7 +266,7 @@ class RegisterForm extends Component {
 				errorMsg: null,
 			};
 		}
-	}
+	};
 
 	validateUsernameAvailability() {
 		const usernameValue = this.state.username.value;
@@ -274,33 +275,27 @@ class RegisterForm extends Component {
 		if (usernameValidation.status === false) return;
 
 		authService.checkUsernameAvailability(usernameValue)
-			.then(response => {
-				if (response.available) {
-					this.setState({
-						username: {
-							value: usernameValue,
-							valid: {
-								status: true,
-								errorMsg: null
-							}
+			.then((response) => {
+				console.log(response);
+				this.setState({
+					username: {
+						value: usernameValue,
+						valid: {
+							status: true,
+							errorMsg: null
 						}
-					});
-				} else {
-					this.setState({
-						username: {
-							value: usernameValue,
-							valid: {
-								status: false,
-								errorMsg: "Ова корисничко име е веќе регистрирано!"
-							}
-						}
-					});
-				}
+					}
+				});
 			}).catch(error => {
-			store.addNotification({
-				...notificationError,
-				message: error.toString()
-			});
+				this.setState({
+					username: {
+						value: usernameValue,
+						valid: {
+							status: false,
+							errorMsg: error.message
+						}
+					}
+				});
 		});
 	}
 
@@ -311,33 +306,27 @@ class RegisterForm extends Component {
 		if (emailValidation.status === false) return;
 
 		authService.checkEmailAvailability(emailValue)
-			.then(response => {
-				if (response.available) {
-					this.setState({
-						email: {
-							value: emailValue,
-							valid: {
-								status: true,
-								errorMsg: null
-							}
+			.then(() => {
+				this.setState({
+					email: {
+						value: emailValue,
+						valid: {
+							status: true,
+							errorMsg: null
 						}
-					});
-				} else {
-					this.setState({
-						email: {
-							value: emailValue,
-							valid: {
-								status: false,
-								errorMsg: "Оваа е-пошта е веќе регистрирана!"
-							}
-						}
-					});
-				}
+					}
+				});
 			}).catch(error => {
-			store.addNotification({
-				...notificationError,
-				message: error.toString()
-			});
+				console.log(error);
+				this.setState({
+					email: {
+						value: emailValue,
+						valid: {
+							status: false,
+							errorMsg: error.message
+						}
+					}
+				});
 		});
 	}
 }
