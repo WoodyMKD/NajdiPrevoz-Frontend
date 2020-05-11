@@ -78,6 +78,19 @@ const userService = {
 		});
 	},
 
+    deleteUserCar: (carId) => {
+        if(!localStorage.getItem(ACCESS_TOKEN)) {
+            return Promise.reject("Не најавен корисник!");
+        }
+        return request({
+            url: API_BASE_URL + "/user/cars",
+            method: 'DELETE',
+            body: JSON.stringify({
+                id: carId
+            })
+        });
+    },
+
 	addUserTelNumber: (number) => {
 		if(!localStorage.getItem(ACCESS_TOKEN)) {
 			return Promise.reject("Не најавен корисник!");
@@ -99,7 +112,31 @@ const userService = {
 			url: API_BASE_URL + "/user/telNumbers",
 			method: 'GET'
 		});
-	}
+	},
+
+    deleteUserTelNumber: (number) => {
+        if(!localStorage.getItem(ACCESS_TOKEN)) {
+            return Promise.reject("Не најавен корисник!");
+        }
+        return request({
+            url: API_BASE_URL + "/user/telNumbers",
+            method: 'DELETE',
+            body: JSON.stringify({
+				number: number
+			})
+        });
+    },
+
+    canCreateTrip: () => {
+        if(!localStorage.getItem(ACCESS_TOKEN)) {
+            return Promise.reject("Не најавен корисник!");
+        }
+
+        return request({
+            url: API_BASE_URL + "/user/canCreateTrip",
+            method: 'GET'
+        });
+    }
 };
 
 export default userService;

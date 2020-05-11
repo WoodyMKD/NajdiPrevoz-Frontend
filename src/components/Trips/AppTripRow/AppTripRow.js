@@ -29,7 +29,7 @@ const appTripRow = (props) => {
 						</div>
 						<div className="col-lg-5 col-md-12">
 							<div className="driver-number">
-								<p><FontAwesomeIcon icon={faPhone}/> {props.trip.telNumber.number}</p>
+								<p><FontAwesomeIcon icon={faPhone}/> {props.trip.telNumber}</p>
 							</div>
 						</div>
 					</div>

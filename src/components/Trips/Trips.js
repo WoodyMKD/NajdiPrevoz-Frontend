@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {
-	Col,
-	Container,
-	Form,
-	FormGroup,
-	Nav,
-	NavItem,
-	NavLink,
-	Row,
-	TabContent,
-	TabPane
+    Button,
+    Col,
+    Container,
+    Form,
+    FormGroup,
+    Nav,
+    NavItem,
+    NavLink,
+    Row,
+    TabContent,
+    TabPane
 } from "reactstrap";
 
 import LoadingOverlay from 'react-loading-overlay';
@@ -22,13 +23,15 @@ import {faArrowRight, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {allCities, TRIP_STATUS} from "../../utils/constants";
 import classnames from 'classnames';
+import UserService from "../../services/userService";
 import AppTripsService from "../../services/appTripService";
 import FbTripsService from "../../services/fbTripService";
 import FacebookAppTripRow from "./FacebookTripRow/FacebookTripRow";
 import FormModal from "../Modals/Forms/FormModal";
 import DropdownList from 'react-widgets/lib/DropdownList'
 import {store} from "react-notifications-component";
-import {notificationError, notificationSuccess} from "../../utils/notifications";
+import {notificationError, notificationSuccess, notificationWarning} from "../../utils/notifications";
+import {faPlusCircle} from "@fortawesome/free-solid-svg-icons/index";
 
 class Trips extends Component {
 
@@ -51,10 +54,12 @@ class Trips extends Component {
 			activeTab: '1',
 			isModalLoading: false,
 			addAppTripModalOpened: false,
-            isAuthenticated: this.props.isAuthenticated
+            isAuthenticated: this.props.isAuthenticated,
+            canCreateTrip: false
 		};
 		this.loadTrips = this.loadTrips.bind(this);
 		this.createTrip = this.createTrip.bind(this);
+        this.canCreateTrip = this.canCreateTrip.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleDropdownInputChange = this.handleDropdownInputChange.bind(this);
@@ -64,6 +69,7 @@ class Trips extends Component {
 
 	componentDidMount() {
 		this.loadTrips(this.state.cityFrom, this.state.cityTo);
+		this.canCreateTrip();
 	}
 
 	toggleAddAppTripModal = () => {
@@ -71,6 +77,13 @@ class Trips extends Component {
 			addAppTripModalOpened: !prevState.addAppTripModalOpened
 		}));
 	};
+
+	sendWarning = () => {
+        store.addNotification({
+            ...notificationWarning,
+            message: "Додадете барем еден телефонски број и возило на вашиот профил за да може да креирате понуда."
+        });
+    };
 
 	loadTrips = (cityFrom, cityTo, flag=0, page=0) => {
 		//flag: 0 - both; 1 - appTrips; 2 - fbTrips
@@ -179,6 +192,24 @@ class Trips extends Component {
 			});
 		});
 	};
+
+    canCreateTrip() {
+        if (this.state.isAuthenticated) {
+            UserService.canCreateTrip().then((response) => {
+                let result = response.response;
+                this.setState((prevState) => {
+                    return {
+                        canCreateTrip: result
+                    }
+                });
+            }).catch((error) => {
+                store.addNotification({
+                    ...notificationError,
+                    message: error.message
+                });
+            });
+    	}
+    }
 
 	handleSubmit(event) {
 		event.preventDefault();
@@ -312,14 +343,29 @@ class Trips extends Component {
 
 		let actionButtons;
 		if(this.state.isAuthenticated) {
-            actionButtons = (
-                <Row>
-                    <div className="action-buttons">
-                        <FormModal buttonLabel="Нова понуда" action="CreateAppTrip" cityFrom={this.props.cityFrom} cityTo={this.props.cityTo} createTrip={this.createTrip}
-                                   isModalLoading={this.state.isModalLoading} toggleFunction={this.toggleAddAppTripModal} modalOpened={this.state.addAppTripModalOpened}/>
-                    </div>
-                </Row>
-            );
+		    if(this.state.canCreateTrip) {
+                actionButtons = (
+                    <Row>
+                        <div className="action-buttons">
+                            <FormModal buttonLabel="Нова понуда" action="CreateAppTrip" cityFrom={this.props.cityFrom} cityTo={this.props.cityTo} createTrip={this.createTrip}
+                                       isModalLoading={this.state.isModalLoading} toggleFunction={this.toggleAddAppTripModal} modalOpened={this.state.addAppTripModalOpened}/>
+                        </div>
+                    </Row>
+                );
+            } else {
+		        actionButtons = (
+                    <Row>
+                        <div className="action-buttons">
+                            <Button
+                                color="success"
+                                onClick={this.sendWarning}
+                                style={{float: "left", marginRight:"10px"}}>
+                                <FontAwesomeIcon icon={faPlusCircle}/> Нова понуда
+                            </Button>;
+                        </div>
+                    </Row>
+                );
+            }
 		}
 
 		let ValueInput = ({item}, prefix) => {

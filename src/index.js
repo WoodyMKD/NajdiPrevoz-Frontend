@@ -9,6 +9,7 @@ import momentLocalizer from 'react-widgets-moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications-component/dist/theme.css'
 import 'react-widgets/dist/css/react-widgets.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 Moment.locale('mk');
 momentLocalizer();

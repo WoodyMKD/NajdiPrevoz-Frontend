@@ -10,6 +10,7 @@ import FormModal from "../Modals/Forms/FormModal";
 import CarTableRow from "./CarTableRow/CarTableRow";
 import {notificationError, notificationSuccess, soonNotification} from "../../utils/notifications";
 import {store} from "react-notifications-component";
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 class Profile extends Component {
 	constructor(props) {
@@ -33,6 +34,8 @@ class Profile extends Component {
 		this.toggleAddCarModal = this.toggleAddCarModal.bind(this);
 		this.toggleEditCarModal = this.toggleEditCarModal.bind(this);
 		this.toggleAddTelNumberModal = this.toggleAddTelNumberModal.bind(this);
+        this.confirmTelNumberDelete = this.confirmTelNumberDelete.bind(this);
+        this.deleteTelNumber = this.deleteTelNumber.bind(this);
 	}
 
 	componentDidMount() {
@@ -176,10 +179,80 @@ class Profile extends Component {
 		});
 	};
 
+	confirmTelNumberDelete = (number) => {
+        confirmAlert({
+            title: 'Бришење телефонски број',
+            message: 'Дали сте сигурни?',
+            buttons: [
+                {
+                    label: 'Да',
+                    onClick: () => {
+                    	console.log(number);
+                    	this.deleteTelNumber(number)
+                    }
+                },
+                {
+                    label: 'Не'
+                }
+            ]
+        });
+	};
+
+    deleteTelNumber = (number) => {
+        return UserService.deleteUserTelNumber(number).then((response) => {
+            this.loadPhoneNumbers();
+
+            store.addNotification({
+                ...notificationSuccess,
+                message: "Успешна го избришавте телефонскиот број."
+            });
+        }).catch((error) => {
+            store.addNotification({
+                ...notificationError,
+                message: error.message
+            });
+        });
+    };
+
+    confirmCarDelete = (carId) => {
+        confirmAlert({
+            title: 'Бришење возило',
+            message: 'Дали сте сигурни?',
+            buttons: [
+                {
+                    label: 'Да',
+                    onClick: () => {
+                        console.log(carId);
+                        this.deleteCar(carId)
+                    }
+                },
+                {
+                    label: 'Не'
+                }
+            ]
+        });
+    };
+
+    deleteCar = (id) => {
+        return UserService.deleteUserCar(id).then((response) => {
+            this.loadCars();
+
+            store.addNotification({
+                ...notificationSuccess,
+                message: "Успешна го избришавте возилото."
+            });
+        }).catch((error) => {
+            store.addNotification({
+                ...notificationError,
+                message: error.message
+            });
+        });
+    };
+
 	render() {
 		const carRows = this.state.cars.map((car) => {
 			return (
-				<CarTableRow key={car.id} car={car} isModalLoading={this.state.isModalLoading} toggleEditCarModal={this.toggleEditCarModal} editCarModalOpened={this.state.editCarModalOpened} editCar={this.editCar}/>
+				<CarTableRow key={car.id} car={car} isModalLoading={this.state.isModalLoading} toggleEditCarModal={this.toggleEditCarModal} editCarModalOpened={this.state.editCarModalOpened} editCar={this.editCar} confirmCarDelete={this.confirmCarDelete}/>
 			);
 		});
 
@@ -190,9 +263,9 @@ class Profile extends Component {
 						<div className="number-text">
 							{num.number}
 						</div>
-						<div className="number-button" onClick={soonNotification}>
-							<FontAwesomeIcon icon={faTimes}/>
-						</div>
+                        <div className="number-button" onClick={() => this.confirmTelNumberDelete(num.number)}>
+                            <FontAwesomeIcon icon={faTimes}/>
+                        </div>
 					</div>
 				</Col>
 			);

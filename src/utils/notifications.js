@@ -40,6 +40,20 @@ export const notificationSoon = {
     }
 };
 
+export const notificationWarning = {
+    title: "Внимание!",
+    message: "Warning",
+    type: "info",
+    insert: "top",
+    container: "bottom-right",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+        duration: 3500,
+        onScreen: true
+    }
+};
+
 export const soonNotification = () => {
     store.addNotification({
         ...notificationSoon,
