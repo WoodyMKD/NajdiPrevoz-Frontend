@@ -2,7 +2,7 @@ import React from 'react';
 import {Alert, Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
 import {withRouter} from 'react-router';
 
-import authService from '../../../services/authService';
+import userService from '../../../services/userService';
 import {ACCESS_TOKEN} from '../../../utils/constants';
 
 import './Login.scss';
@@ -46,7 +46,7 @@ class LoginForm extends React.Component {
         errorMessage: "Внесете го вашето корисничко име и лозинка!"
       });
     } else {
-      authService.login(loginRequest)
+      userService.login(loginRequest)
         .then(response => {
           if(response.statusCode === 401) {
               response.message = "Внесовте невалидно корисничко име и лозинка!";

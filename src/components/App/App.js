@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {Route, Switch} from 'react-router-dom';
-import {Redirect, withRouter} from "react-router";
+import {Redirect, Route, Switch, withRouter} from "react-router";
 import ReactNotification, {store} from 'react-notifications-component'
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 import {ACCESS_TOKEN} from '../../utils/constants';
 import AppTripsRepository from "../../services/appTripService";
-import authService from "../../services/authService";
+import userService from "../../services/userService";
 import {notificationError, notificationSuccess} from "../../utils/notifications";
 
 import Trips from "../Trips/Trips";
@@ -20,11 +19,20 @@ import Home from "../Home/Home";
 import './App.css';
 import Profile from "../Profile/Profile";
 import MyTrips from "../MyTrips/MyTrips";
+// import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 
 // TODO: Protected LINKS (authentication)
 // TODO: Validation methods for the forms
 // TODO: DropDown and DateTimePicker for forms
 // TODO: Create, Edit, Finish AppTrip
+
+const ProtectedRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={() => (
+        rest.isAuthenticated === true
+            ? <Component {...rest} />
+            : <h2 style={{textAlign:"center"}}>Не сте најавени!</h2>
+    )} />
+);
 
 class App extends Component {
   constructor(props) {
@@ -55,7 +63,7 @@ class App extends Component {
   }
 
   loadCurrentUser() {
-    authService.getCurrentUser().then(response => {
+    userService.getCurrentUser().then(response => {
       this.setState({
         currentUser: response.response,
         isAuthenticated: true
@@ -159,14 +167,10 @@ class App extends Component {
                   <RegisterForm onRegister={this.handleRegister}/>
                 }/>
                 <Route path={"/trips"} exact render={() =>
-                  <Trips cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange} currentUser={this.state.currentUser}/>
+                  <Trips cityFrom={this.state.cityFrom} cityTo={this.state.cityTo} onCityChange={this.onCityChange} isAuthenticated={this.state.isAuthenticated}/>
                 }/>
-                <Route path={"/my-profile"} exact render={() =>
-                  <Profile />
-                }/>
-                <Route path={"/my-trips"} exact render={() =>
-                  <MyTrips />
-                }/>
+                <ProtectedRoute isAuthenticated={this.state.isAuthenticated} path={"/my-profile"} exact component={Profile}/>
+                <ProtectedRoute isAuthenticated={this.state.isAuthenticated} path={"/my-trips"} exact component={MyTrips}/>
                 <Route path={"/"} exact render={() =>
                   <Home onCityChange={this.onCityChange} cityFrom={this.state.cityFrom} cityTo={this.state.cityTo}/>
                 }/>

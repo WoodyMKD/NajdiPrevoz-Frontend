@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import './Profile.css';
 import {Col, Container, Row, Table} from "reactstrap";
-import AuthService from "../../services/authService";
+import UserService from "../../services/userService";
 import LoadingOverlay from "react-loading-overlay";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCarSide, faPhone, faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -46,7 +46,7 @@ class Profile extends Component {
 			carTableLoading: true
 		});
 
-		return AuthService.updateUserCar(car).then((response) => {
+		return UserService.updateUserCar(car).then((response) => {
 			this.loadCars();
 			this.setState(() => {
 				return {
@@ -92,7 +92,7 @@ class Profile extends Component {
 			carTableLoading: true
 		});
 
-		return AuthService.addUserCar(car).then((response) => {
+		return UserService.addUserCar(car).then((response) => {
 			this.loadCars();
 			this.setState(() => {
 				return {
@@ -119,7 +119,7 @@ class Profile extends Component {
 			phoneNumberListLoading: true
 		});
 
-		return AuthService.addUserTelNumber(telNumber).then((response) => {
+		return UserService.addUserTelNumber(telNumber).then((response) => {
 			this.loadPhoneNumbers();
 			this.setState(() => {
 				return {
@@ -145,7 +145,7 @@ class Profile extends Component {
 			carTableLoading: true
 		});
 
-		AuthService.getUserCars().then((response) => {
+        UserService.getUserCars().then((response) => {
 			this.setState({
 				cars: response.response,
 				carTableLoading: false
@@ -163,7 +163,7 @@ class Profile extends Component {
 			phoneNumberListLoading: true
 		});
 
-		AuthService.getUserTelNumbers().then((response) => {
+        UserService.getUserTelNumbers().then((response) => {
 			this.setState({
 				phoneNumbers: response.response,
 				phoneNumberListLoading: false

@@ -50,7 +50,8 @@ class Trips extends Component {
 			cityTo: this.props.cityTo,
 			activeTab: '1',
 			isModalLoading: false,
-			addAppTripModalOpened: false
+			addAppTripModalOpened: false,
+            isAuthenticated: this.props.isAuthenticated
 		};
 		this.loadTrips = this.loadTrips.bind(this);
 		this.createTrip = this.createTrip.bind(this);
@@ -83,21 +84,32 @@ class Trips extends Component {
 
 		if(flag === 0) {
 			Promise.all([appTrips, fbTrips]).then((responses) => {
-				this.setState({
-					isListLoading: false,
-					appTrips: responses[0].content,
-					fbTrips: responses[1].content,
-					fbTripsPagination: {
-						page: responses[1].pageable.pageNumber,
-						totalPages: responses[1].totalPages
-					},
-					appTripsPagination: {
-						page: responses[0].pageable.pageNumber,
-						totalPages: responses[0].totalPages
-					}
-				});
+                console.log(responses);
+				if(responses[0].statusCode === 200 && responses[1].statusCode === 200) {
+                    this.setState({
+                        isListLoading: false,
+                        appTrips: responses[0].response.content,
+                        fbTrips: responses[1].response.content,
+                        fbTripsPagination: {
+                            page: responses[1].response.pageable.pageNumber,
+                            totalPages: responses[1].response.totalPages
+                        },
+                        appTripsPagination: {
+                            page: responses[0].response.pageable.pageNumber,
+                            totalPages: responses[0].response.totalPages
+                        }
+                    });
+                } else {
+					let errorMsg;
+					if(responses[0].statusCode !== 200) errorMsg = responses[0].message;
+					else errorMsg = responses[1].message;
+
+                    store.addNotification({
+                        ...notificationError,
+                        message: errorMsg
+                    });
+				}
 			}).catch((error) => {
-				console.log(error);
 				store.addNotification({
 					...notificationError,
 					message: error.toString()
@@ -107,32 +119,32 @@ class Trips extends Component {
 			appTrips.then((response) => {
 				this.setState({
 					isListLoading: false,
-					appTrips: response.content,
+					appTrips: response.response.content,
 					appTripsPagination: {
-						page: response.pageable.pageNumber,
-						totalPages: response.totalPages
+						page: response.response.pageable.pageNumber,
+						totalPages: response.response.totalPages
 					}
 				});
 			}).catch((error) => {
 				store.addNotification({
 					...notificationError,
-					message: error.toString()
+					message: error.message
 				});
 			});
 		} else if(flag === 2) {
 			fbTrips.then((response) => {
 				this.setState({
 					isListLoading: false,
-					fbTrips: response.content,
+					fbTrips: response.response.content,
 					fbTripsPagination: {
-						page: response.pageable.pageNumber,
-						totalPages: response.totalPages
+						page: response.response.pageable.pageNumber,
+						totalPages: response.response.totalPages
 					}
 				});
 			}).catch((error) => {
 				store.addNotification({
 					...notificationError,
-					message: error.toString()
+					message: error.message
 				});
 			});
 		}
@@ -160,7 +172,7 @@ class Trips extends Component {
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error.toString()
+				message: error.message
 			});
 		});
 	};
@@ -295,6 +307,18 @@ class Trips extends Component {
 			);
 		}
 
+		let actionButtons;
+		if(this.state.isAuthenticated) {
+            actionButtons = (
+                <Row>
+                    <div className="action-buttons">
+                        <FormModal buttonLabel="Нова понуда" action="CreateAppTrip" cityFrom={this.props.cityFrom} cityTo={this.props.cityTo} createTrip={this.createTrip}
+                                   isModalLoading={this.state.isModalLoading} toggleFunction={this.toggleAddAppTripModal} modalOpened={this.state.addAppTripModalOpened}/>
+                    </div>
+                </Row>
+            );
+		}
+
 		let ValueInput = ({item}, prefix) => {
 			return (
 				<span>
@@ -383,12 +407,7 @@ class Trips extends Component {
 						</Nav>
 						<TabContent activeTab={this.state.activeTab}>
 							<TabPane tabId="1">
-								<Row>
-									<div className="action-buttons">
-										<FormModal buttonLabel="Нова понуда" action="CreateAppTrip" cityFrom={this.props.cityFrom} cityTo={this.props.cityTo} createTrip={this.createTrip}
-															 isModalLoading={this.state.isModalLoading} toggleFunction={this.toggleAddAppTripModal} modalOpened={this.state.addAppTripModalOpened}/>
-									</div>
-								</Row>
+								{actionButtons}
 								<Row>
 									{appTripRows}
 								</Row>

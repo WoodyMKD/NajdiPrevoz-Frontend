@@ -33,13 +33,13 @@ class MyTrips extends Component {
 
 		appTripService.getUserTrips(TRIP_STATUS.ALL).then((response) => {
 			this.setState({
-                userTrips: response.content,
+                userTrips: response.response.content,
                 tablesLoading: false
 			});
 		}).catch((error) => {
 			store.addNotification({
 				...notificationError,
-				message: error.toString()
+				message: error.message
 			});
 		});
 	};

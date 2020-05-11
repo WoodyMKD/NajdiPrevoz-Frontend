@@ -5,7 +5,7 @@ import DropdownList from 'react-widgets/lib/DropdownList'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import LoadingOverlay from "react-loading-overlay";
 import * as moment from "moment";
-import AuthService from "../../../../services/authService";
+import UserService from "../../../../services/userService";
 import {store} from "react-notifications-component";
 import {notificationError} from "../../../../utils/notifications";
 
@@ -161,7 +161,7 @@ class AddAppTripForm extends React.Component {
 			carDropDownLoading: true
 		});
 
-		AuthService.getUserCars().then((response) => {
+        UserService.getUserCars().then((response) => {
 			const cars = response.response.map((response) => {
 				return {
 					id: response.id,
@@ -186,7 +186,7 @@ class AddAppTripForm extends React.Component {
 			telNumberDropDownLoading: true
 		});
 
-		AuthService.getUserTelNumbers().then((response) => {
+        UserService.getUserTelNumbers().then((response) => {
 			const numbers = response.response.map((response) => {
 				return response.number;
 			});

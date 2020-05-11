@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Alert, Button, Container, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {withRouter} from 'react-router';
 
-import authService from '../../../services/authService';
+import userService from '../../../services/userService';
 import {
 	EMAIL_MAX_LENGTH,
 	NAME_MAX_LENGTH,
@@ -95,7 +95,7 @@ class RegisterForm extends Component {
 				errorMessage: "Пополнете ги бараните задолжителни полиња!"
 			});
 		} else {
-			authService.register(signupRequest)
+			userService.register(signupRequest)
 				.then(response => {
 					this.props.onRegister();
 				}).catch(error => {
@@ -274,7 +274,7 @@ class RegisterForm extends Component {
 
 		if (usernameValidation.status === false) return;
 
-		authService.checkUsernameAvailability(usernameValue)
+		userService.checkUsernameAvailability(usernameValue)
 			.then((response) => {
 				console.log(response);
 				this.setState({
@@ -305,7 +305,7 @@ class RegisterForm extends Component {
 
 		if (emailValidation.status === false) return;
 
-		authService.checkEmailAvailability(emailValue)
+		userService.checkEmailAvailability(emailValue)
 			.then(() => {
 				this.setState({
 					email: {
