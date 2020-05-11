@@ -361,7 +361,7 @@ class Trips extends Component {
                                 onClick={this.sendWarning}
                                 style={{float: "left", marginRight:"10px"}}>
                                 <FontAwesomeIcon icon={faPlusCircle}/> Нова понуда
-                            </Button>;
+                            </Button>
                         </div>
                     </Row>
                 );
