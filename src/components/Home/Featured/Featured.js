@@ -8,19 +8,22 @@ const featured = () => {
 			<div className="container">
 				<div className="row mb-3">
 					<div className="col-md-12">
-						<h2>Последни понуди</h2>
+						<h2>Популарни понуди</h2>
 					</div>
 				</div>
-				<div className="row">
+				<div className="row soon-overlay-row">
+					<div className="soon-overlay">
+						<p>НАСКОРО</p>
+					</div>
 					<div className="col-md-12 text-center ">
 						<nav className="nav-justified ">
 							<div className="nav nav-tabs " id="nav-tab" role="tablist">
 								<span className="nav-item nav-link active" id="pop1-tab" data-toggle="tab"
-									 role="tab" aria-controls="pop1" aria-selected="true">Popular Cars</span>
+									 role="tab" aria-controls="pop1" aria-selected="true">Сите</span>
 								<span className="nav-item nav-link" id="pop2-tab" data-toggle="tab"
-									 role="tab" aria-controls="pop2" aria-selected="false">Upcoming</span>
+									 role="tab" aria-controls="pop2" aria-selected="false">Од Скопје</span>
 								<span className="nav-item nav-link" id="pop3-tab" data-toggle="tab"
-									 role="tab" aria-controls="pop3" aria-selected="false">Newly Launched</span>
+									 role="tab" aria-controls="pop3" aria-selected="false">До Скопје</span>
 
 							</div>
 						</nav>
@@ -32,70 +35,54 @@ const featured = () => {
 									<div className="row">
 										<div className="text-center">
 											<div className="card-group">
-												<span>
+												<span className="col">
 													<div className="card">
 														<img className="card-img-top"
 																 src="https://imgd.aeplcdn.com/310x174/cw/ec/22803/Audi-New-SQ7-Right-Front-Three-Quarter-70082.jpg?wm=0&q=85"
 																 alt="Card cap"/>
 														<div className="card-body">
-															<h4 className="card-title">Maruti Swift</h4>
-															<p className="card-text">Rs. 6.44 Lac to 8.99
-																Lac.</p>
+															<h4 className="card-title">Понуда 1</h4>
+															<p className="card-text">Податоци</p>
 														</div>
 														<div className="card-footer">
 															<button type="button"
-																			className="btn btn-danger btn-block">know
-																more
+																			className="btn btn-primary btn-block">Дознај повеќе
 															</button>
 														</div>
 													</div>
 												</span>
-												<span>
+												<span className="col">
 													<div className="card">
 														<img className="card-img-top"
 																 src="https://imgd.aeplcdn.com/310x174/cw/ec/34253/Mitsubishi-New-Outlander-Exterior-126541.jpg?wm=0&q=85"
 																 alt="Card cap"/>
 														<div className="card-body">
-															<h4 className="card-title">Porsche</h4>
-															<p className="card-text">Rs. 6.44 Lac to 8.99
-																Lac.</p>
+															<h4 className="card-title">Понуда 2</h4>
+															<p className="card-text">Податоци</p>
 														</div>
 														<div className="card-footer">
 															<button type="button"
-																			className="btn btn-danger btn-block">know
-																more
+                                                                    className="btn btn-primary btn-block">Дознај повеќе
 															</button>
 														</div>
 													</div>
 												</span>
-												<div className="card">
-													<img className="card-img-top"
-															 src="https://imgd.aeplcdn.com/310x174/cw/ec/26523/Maruti-Suzuki-Ciaz-Facelift-Exterior-87489.jpg?wm=0&q=85"
-															 alt="Card cap"/>
-													<div className="card-body">
-														<h4 className="card-title">Swift Dezire</h4>
-														<p className="card-text">Rs. 6.44 Lac to 8.99 Lac.</p>
+												<span className="col">
+													<div className="card">
+														<img className="card-img-top"
+																 src="https://imgd.aeplcdn.com/310x174/cw/ec/26523/Maruti-Suzuki-Ciaz-Facelift-Exterior-87489.jpg?wm=0&q=85"
+																 alt="Card cap"/>
+														<div className="card-body">
+															<h4 className="card-title">Понуда 3</h4>
+															<p className="card-text">Податоци</p>
+														</div>
+														<div className="card-footer">
+															<button type="button"
+																	className="btn btn-primary btn-block">Дознај повеќе
+															</button>
+														</div>
 													</div>
-													<div className="card-footer">
-														<button type="button"
-																		className="btn btn-danger btn-block">know more
-														</button>
-													</div>
-												</div>
-												<div className="card">
-													<img className="card-img-top"
-															 src="https://imgd.aeplcdn.com/310x174/cw/ec/22803/Audi-New-SQ7-Right-Front-Three-Quarter-70082.jpg?wm=0&q=85"
-															 alt="Card cap"/>
-													<div className="card-body">
-														<h4 className="card-title">Maruti Swift</h4>
-														<p className="card-text">Rs. 6.44 Lac to 8.99 Lac.</p>
-													</div>
-													<div className="card-footer">
-														<button type="button"
-																		className="btn btn-danger btn-block">know more
-														</button>
-													</div>
-												</div>
+												</span>
 											</div>
 										</div>
 									</div>

@@ -14,6 +14,7 @@ const Header = (props) => {
 	const toggle = () => setIsOpen(!isOpen);
 
 	let menu;
+    console.log(props);
 	if (props.isAuthenticated) {
         menu = (
             <Collapse isOpen={isOpen} navbar>

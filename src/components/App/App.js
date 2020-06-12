@@ -64,6 +64,11 @@ class App extends Component {
 
   loadCurrentUser() {
     userService.getCurrentUser().then(response => {
+      if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+          localStorage.removeItem(ACCESS_TOKEN);
+          throw new Error(response.status);
+      }
+
       this.setState({
         currentUser: response.response,
         isAuthenticated: true

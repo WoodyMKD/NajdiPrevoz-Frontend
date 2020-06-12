@@ -10,7 +10,8 @@ import FormModal from "../Modals/Forms/FormModal";
 import CarTableRow from "./CarTableRow/CarTableRow";
 import {notificationError, notificationSuccess, soonNotification} from "../../utils/notifications";
 import {store} from "react-notifications-component";
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert } from 'react-confirm-alert';
+import {ACCESS_TOKEN} from "../../utils/constants"; // Import
 
 class Profile extends Component {
 	constructor(props) {
@@ -50,6 +51,10 @@ class Profile extends Component {
 		});
 
 		return UserService.updateUserCar(car).then((response) => {
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
 			this.loadCars();
 			this.setState(() => {
 				return {
@@ -96,6 +101,10 @@ class Profile extends Component {
 		});
 
 		return UserService.addUserCar(car).then((response) => {
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 201 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
 			this.loadCars();
 			this.setState(() => {
 				return {
@@ -123,6 +132,11 @@ class Profile extends Component {
 		});
 
 		return UserService.addUserTelNumber(telNumber).then((response) => {
+			console.log(response);
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 201 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
 			this.loadPhoneNumbers();
 			this.setState(() => {
 				return {
@@ -149,7 +163,11 @@ class Profile extends Component {
 		});
 
         UserService.getUserCars().then((response) => {
-			this.setState({
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
+        	this.setState({
 				cars: response.response,
 				carTableLoading: false
 			});
@@ -167,7 +185,11 @@ class Profile extends Component {
 		});
 
         UserService.getUserTelNumbers().then((response) => {
-			this.setState({
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
+        	this.setState({
 				phoneNumbers: response.response,
 				phoneNumberListLoading: false
 			});
@@ -200,7 +222,11 @@ class Profile extends Component {
 
     deleteTelNumber = (number) => {
         return UserService.deleteUserTelNumber(number).then((response) => {
-            this.loadPhoneNumbers();
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
+        	this.loadPhoneNumbers();
 
             store.addNotification({
                 ...notificationSuccess,
@@ -235,7 +261,11 @@ class Profile extends Component {
 
     deleteCar = (id) => {
         return UserService.deleteUserCar(id).then((response) => {
-            this.loadCars();
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
+        	this.loadCars();
 
             store.addNotification({
                 ...notificationSuccess,

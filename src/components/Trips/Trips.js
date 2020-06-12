@@ -21,7 +21,7 @@ import AppTripRow from './AppTripRow/AppTripRow'
 import './Trips.css';
 import {faArrowRight, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {allCities, TRIP_STATUS} from "../../utils/constants";
+import {ACCESS_TOKEN, allCities, TRIP_STATUS} from "../../utils/constants";
 import classnames from 'classnames';
 import UserService from "../../services/userService";
 import AppTripsService from "../../services/appTripService";
@@ -97,7 +97,6 @@ class Trips extends Component {
 
 		if(flag === 0) {
 			Promise.all([appTrips, fbTrips]).then((responses) => {
-                console.log(responses);
 				if(responses[0].statusCode === 200 && responses[1].statusCode === 200) {
                     this.setState({
                         isListLoading: false,
@@ -173,6 +172,10 @@ class Trips extends Component {
 		});
 
 		return AppTripsService.createTrip(newTrip).then((response) => {
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 201 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
 			this.loadTrips(this.state.cityFrom, this.state.cityTo);
 			this.setState((prevState) => {
 				return {
@@ -196,7 +199,11 @@ class Trips extends Component {
     canCreateTrip() {
         if (this.state.isAuthenticated) {
             UserService.canCreateTrip().then((response) => {
-                let result = response.response;
+                if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                    throw new Error(response.status);
+                }
+
+            	let result = response.response;
                 this.setState((prevState) => {
                     return {
                         canCreateTrip: result

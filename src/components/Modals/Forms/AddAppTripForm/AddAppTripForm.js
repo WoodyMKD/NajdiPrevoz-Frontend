@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Form, FormGroup, Label, Input, Alert, FormFeedback, Col, Row} from 'reactstrap';
-import {allCities, MIN_PRICE} from "../../../../utils/constants";
+import {ACCESS_TOKEN, allCities, MIN_PRICE} from "../../../../utils/constants";
 import DropdownList from 'react-widgets/lib/DropdownList'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import LoadingOverlay from "react-loading-overlay";
@@ -162,7 +162,11 @@ class AddAppTripForm extends React.Component {
 		});
 
         UserService.getUserCars().then((response) => {
-			const cars = response.response.map((response) => {
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
+        	const cars = response.response.map((response) => {
 				return {
 					id: response.id,
 					car: response.manufacturer + " " + response.model
@@ -187,7 +191,11 @@ class AddAppTripForm extends React.Component {
 		});
 
         UserService.getUserTelNumbers().then((response) => {
-			const numbers = response.response.map((response) => {
+            if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                throw new Error(response.status);
+            }
+
+        	const numbers = response.response.map((response) => {
 				return response.number;
 			});
 

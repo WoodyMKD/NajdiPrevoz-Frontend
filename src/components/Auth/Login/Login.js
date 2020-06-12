@@ -54,6 +54,8 @@ class LoginForm extends React.Component {
                   errorsVisible: true,
                   errorMessage: response.message
               });
+          } else if(response.accessToken === undefined) {
+              throw new Error(response.status);
           } else {
               localStorage.setItem(ACCESS_TOKEN, response.accessToken);
               this.props.onLogin();

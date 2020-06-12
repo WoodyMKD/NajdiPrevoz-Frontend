@@ -4,13 +4,14 @@ import {withRouter} from 'react-router';
 
 import userService from '../../../services/userService';
 import {
-	EMAIL_MAX_LENGTH,
-	NAME_MAX_LENGTH,
-	NAME_MIN_LENGTH,
-	PASSWORD_MAX_LENGTH,
-	PASSWORD_MIN_LENGTH,
-	USERNAME_MAX_LENGTH,
-	USERNAME_MIN_LENGTH
+    ACCESS_TOKEN,
+    EMAIL_MAX_LENGTH,
+    NAME_MAX_LENGTH,
+    NAME_MIN_LENGTH,
+    PASSWORD_MAX_LENGTH,
+    PASSWORD_MIN_LENGTH,
+    USERNAME_MAX_LENGTH,
+    USERNAME_MIN_LENGTH
 } from '../../../utils/constants';
 
 import './Register.css';
@@ -97,6 +98,9 @@ class RegisterForm extends Component {
 		} else {
 			userService.register(signupRequest)
 				.then(response => {
+                    if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                        throw new Error(response.status);
+                    }
 					this.props.onRegister();
 				}).catch(error => {
 					console.log(error);
@@ -276,7 +280,10 @@ class RegisterForm extends Component {
 
 		userService.checkUsernameAvailability(usernameValue)
 			.then((response) => {
-				console.log(response);
+                if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                    throw new Error(response.status);
+                }
+
 				this.setState({
 					username: {
 						value: usernameValue,
@@ -306,8 +313,12 @@ class RegisterForm extends Component {
 		if (emailValidation.status === false) return;
 
 		userService.checkEmailAvailability(emailValue)
-			.then(() => {
-				this.setState({
+			.then((response) => {
+                if(response.status !== 200 && response.statusCode === undefined || response.statusCode !== 200 && response.statusCode !== undefined) {
+                    throw new Error(response.status);
+                }
+
+            	this.setState({
 					email: {
 						value: emailValue,
 						valid: {
@@ -317,7 +328,6 @@ class RegisterForm extends Component {
 					}
 				});
 			}).catch(error => {
-				console.log(error);
 				this.setState({
 					email: {
 						value: emailValue,
